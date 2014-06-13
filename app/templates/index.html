@@ -18,127 +18,103 @@
 
   <div id="top" class="container marketing">
 
-    <!-- START THE FEATURETTES -->
+    <form action="" method="post" name="user_previous_consumed_nutrition">
+        <p>
+            Please enter your previously-consumed nutrition:<br>
 
-    <div class="row featurette">
-      <div class="col-md-7">
-        <h2 class="featurette-heading">
-          Build web apps with <span class="text-muted">Insight</span>.
-        </h2>
-        <p class="lead">
-          New to web development, and need a quick way to get started?
-          <strong>InsightFL</strong> is a pre-configured template
-          to help you get started building minimal web applications
-          with <a href="http://flask.pocoo.org/">Flask</a>.
+        <table style="undefined;table-layout: fixed; width: 640px">
+        <colgroup>
+        <col style="width: 43px">
+        <col style="width: 90px">
+        <col style="width: 110px">
+        <col style="width: 75px">
+        <col style="width: 104px">
+        <col style="width: 104px">
+        <col style="width: 103px">
+        </colgroup>
+          <tr>
+            <th></th>
+            <th>Calories</th>
+            <th>Carbs (g)</th>
+            <th>Fat (g)</th>
+            <th>Protein (g)</th>
+            <th>Sugar (g)</th>
+            <th>Fiber (g)</th>
+          </tr>
+          <tr>
+            <td>Goal:</td>
+            <td>2000</td>
+            <td>245</td>
+            <td>65</td>
+            <td>98</td>
+            <td>74</td>
+            <td>38</td>
+          </tr>
+        </table>
+        
+            <h2>{{form.user_previous_consumed_nutrition(size=40)}}<br></h2>
         </p>
-        <p class="lead">
-          Check out the <a href="https://github.com/stormpython/insightfl#getting-started">Getting Started</a> guide.
-        </p>
-      </div>
-      <div class="col-md-5">
-        <img class="featurette-image img-responsive"
-             src="http://upload.wikimedia.org/wikipedia/commons/3/3c/Flask_logo.svg"
-             style="margin-top: 50px;">
-      </div>
+        <p>{{form.random_dinner_flag}} Random meal combination!</p>
+        <p><input type="submit" value="WFD"></p>
+    </form>
+
+    <p>{{error_text}}</p>
+
+    <div class="panel-body" style="height:inherit; overflow:auto;">          
+            {%for line in data%}
+			<br>{{line}}<br>
+			{% endfor %}
     </div>
-
-    <hr class="featurette-divider">
-
-    <div class="row featurette">
-      <div class="col-md-5">
-        <img class="featurette-image img-responsive"
-             src="http://bower.io/img/bower-logo.png" alt="Generic placeholder image">
-      </div>
-      <div class="col-md-7">
-        <h2 class="featurette-heading">
-          Built with the <span class="text-muted">POWER</span> of <span class="text-muted">BOWER!</span>
-        </h2>
-        <p class="lead">
-          Bower is a package manager for the web. Bower depends on <a href="http://nodejs.org">node</a>
-          and <a href="https://www.npmjs.org/">npm</a>. It can be installed globally using npm:
-        </p>
-        <pre>npm install -g bower</pre>
-        <p class="lead">
-          Download all your favorite frontend applications using a simple command interface. For example:
-        </p>
-        <pre>bower install bootstrap</pre>
-      </div>
-    </div>
-
-    <hr class="featurette-divider">
-
-    <div class="row featurette">
-      <div class="col-md-7">
-        <h2 class="featurette-heading">
-          Bootstrap your app with <span class="text-muted">Twitter Bootstrap.</span>
-        </h2>
-        <p class="lead">
-          Bootstrap is the most popular frontend framework for developing responsive,
-          mobile first projects on the web. Easily get started building beautiful,
-          interactive web pages no matter your skill level.
-        </p>
-      </div>
-      <div class="col-md-5">
-        <img class="featurette-image img-responsive"
-             src="http://ollomedia.com/wp-content/uploads/Bootstrap-2-1-Is-the-Latest-Update-to-Twitter-s-Popular-Open-Source-Project.png"
-             alt="Generic placeholder image">
-      </div>
-    </div>
-
-    <hr class="featurette-divider">
-
-    <div class="row featurette">
-      <div class="col-md-5">
-        <img class="featurette-image img-responsive"
-             src="http://freebiesbug.com/wp-content/uploads/2013/09/reveal-js.jpg"
-             alt="Generic placeholder image">
-      </div>
-      <div class="col-md-7">
-        <h2 class="featurette-heading">
-          Create powerful HTML presentations with <span class="text-muted">Reveal.JS</span>.
-        </h2>
-        <p class="lead">
-          Reveal.js is a framework for easily creating beautiful presentations using HTML. There is even
-          a fully-featured visual editor. You can try it out at <a href="http://slid.es">http://slid.es</a>.
-        </p>
-      </div>
-    </div>
-
-    <hr class="featurette-divider" style="margin-bottom: 0px;">
-
-    <div class="row featurette">
-      <a href="https://github.com/stormpython/insightfl">
-        <img style="position: absolute; top: 450; right: 0; border: 0; z-index: 1;"
-             src="https://github-camo.global.ssl.fastly.net/a6677b08c955af8400f44c6298f40e7d19cc5b2d/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67"
-             alt="Fork me on GitHub"
-             data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png">
-      </a>
-      <div class="col-md-7">
-        <h2 class="featurette-heading" style="margin-top: 50px;">
-          Everything is in version control from the <span class="text-muted">Git</span> go!
-        </h2>
-        <p class="lead">
-          Git is a free and open source distributed version control system designed to handle everything
-          from small to very large projects with speed and efficiency. New to Git?
-          <a href="http://try.github.io/levels/1/challenges/1">Try it!</a>
-        </p>
-        <p class="lead">
-          Already a git pro! Fork the project on <span class="text-muted">Github.</span>
-        </p>
-      </div>
-      <div class="col-md-5">
-        <img class="featurette-image img-responsive"
-             src="https://github.global.ssl.fastly.net/images/modules/logos_page/GitHub-Mark.png"
-             alt="Generic placeholder image">
-      </div>
-    </div>
-
-    <!-- /END THE FEATURETTES -->
-
+    
+    {% if dinner_nutrition_data %}
+        <style type="text/css">
+        .tg  {border-collapse:collapse;border-spacing:0;}
+        .tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
+        .tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
+        .tg .tg-s6z2{text-align:center}
+        .tg .tg-huh2{font-size:14px;text-align:center}
+        </style>
+        <table class="tg" style="undefined;table-layout: fixed; width: 616px">
+        <colgroup>
+        <col style="width: 90px">
+        <col style="width: 129px">
+        <col style="width: 77px">
+        <col style="width: 107px">
+        <col style="width: 107px">
+        <col style="width: 106px">
+        </colgroup>
+          <tr>
+            <th class="tg-s6z2">Calories</th>
+            <th class="tg-s6z2">Carbs (g)</th>
+            <th class="tg-s6z2">Fat (g)</th>
+            <th class="tg-s6z2">Protein (g)</th>
+            <th class="tg-s6z2">Sugar (g)</th>
+            <th class="tg-s6z2">Fiber (g)</th>
+          </tr>
+          <tr>
+            <td class="tg-031e">{{dinner_nutrition_data[0]}}</td>
+            <td class="tg-031e">{{dinner_nutrition_data[1]}}</td>
+            <td class="tg-031e">{{dinner_nutrition_data[2]}}</td>
+            <td class="tg-031e">{{dinner_nutrition_data[3]}}</td>
+            <td class="tg-031e">{{dinner_nutrition_data[4]}}</td>
+            <td class="tg-031e">{{dinner_nutrition_data[5]}}</td>
+          </tr>
+        </table>
+    {% endif %}
+    
     <!-- FOOTER -->
+
+<style>
+  .bottom-three {
+     margin-bottom: 3cm;
+  }
+</style>
+
+<p class="bottom-three">
+
     <footer>
-      <p class="pull-right"><a href="#top">Back to top</a></p>
-      <p>&copy; Shelby Sturgis. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+      <p class="pull-right"></p>
+      <p>&copy; Christopher Klein </p>
     </footer>
 
   </div><!-- /.container -->
