@@ -18,7 +18,7 @@ class PortionList:
     
     def print_summary(self):
         print "food_code: %d, sub_code: %d" % (self.food_code, self.sub_code)
-        for portion in list_of_portions:
+        for portion in self.list_of_portions:
             print "\t", 
             portion.print_summary()
 

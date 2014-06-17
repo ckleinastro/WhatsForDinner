@@ -8,13 +8,13 @@
     <meta name="author" content="">
     <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
 
-    <title>Starter Template</title>
+    <title>What's for Dinner</title>
+
+    <script src="{{ url_for('static', filename='vendor/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 
     <!-- Bootstrap core CSS -->
     <link href="{{ url_for('static', filename='vendor/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
-
-    <!-- Revealjs core CSS -->
-    <link href="{{ url_for('static', filename='vendor/components-revealjs/css/reveal.min.css') }}" rel="stylesheet">
 
     <!-- Page specific CSS files -->
     {% block head %}{% endblock %}
@@ -67,10 +67,8 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="{{ url_for('static', filename='vendor/jquery/dist/jquery.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 
+    
     <!-- Page specific script files -->
     {% block scripts %}{% endblock %}
 
@@ -82,5 +80,6 @@
       });
     </script>
 
+    
   </body>
 </html>

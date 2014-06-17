@@ -28,3 +28,4 @@ db = app.config["DATABASE_DB"]
 
 
 from app import views
+

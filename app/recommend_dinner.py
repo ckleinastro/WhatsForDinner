@@ -1,6 +1,6 @@
 from gensim.models import word2vec as gword2vec
 import random
-from numpy import array, mean
+from numpy import array, mean, where
 import pickle
 import pymysql
 import sys
@@ -68,7 +68,7 @@ def random_dinner(target_num_items, model, clusters):
 
 def recommend_dinner(dinner_nutrition_target, daily_nutrition_goal, model, clusters, themed=True):
     seed_dinners = []
-    for w in range(30):
+    for w in range(25):
         if themed:
             seed_dinners.append(themed_dinner(random.choice([4, 5, 6]), model, clusters))
         else:
@@ -127,7 +127,64 @@ def recommend_dinner(dinner_nutrition_target, daily_nutrition_goal, model, clust
     return dinner_list_with_scores[0][0], dinner_list_with_scores[0][1]
     
 
+def historical_dinner_match(dinner_nutrition_target, daily_nutrition_goal):
+    dinner_list_with_scores = []
+    conn = pymysql.connect(host='127.0.0.1', port=3306, user='root', passwd='', 
+                           db='food_consumption')
+    cur = conn.cursor()
 
+    counter = 0.1
+    while counter < 1.0:
+        cutting_limits = [1-counter, 1+counter]
+        cur.execute("""
+        SELECT  calories, carbohydrate, fat, protein, sugar, fiber,
+                dinner_desc, portion_masses
+        FROM historical_dinners
+        WHERE   ((calories > %f) AND (calories < %f)) AND
+                ((carbohydrate > %f) AND (carbohydrate < %f)) AND
+                ((fat > %f) AND (fat < %f)) AND
+                ((protein > %f) AND (protein < %f)) AND
+                ((sugar > %f) AND (sugar < %f)) AND
+                ((fiber > %f) AND (fiber < %f));""" % (
+                dinner_nutrition_target[0]*cutting_limits[0], dinner_nutrition_target[0]*cutting_limits[1],
+                dinner_nutrition_target[1]*cutting_limits[0], dinner_nutrition_target[1]*cutting_limits[1],
+                dinner_nutrition_target[2]*cutting_limits[0], dinner_nutrition_target[2]*cutting_limits[1],
+                dinner_nutrition_target[3]*cutting_limits[0], dinner_nutrition_target[3]*cutting_limits[1],
+                dinner_nutrition_target[4]*cutting_limits[0], dinner_nutrition_target[4]*cutting_limits[1],
+                dinner_nutrition_target[5]*cutting_limits[0], dinner_nutrition_target[5]*cutting_limits[1]))
+        returned_data = cur.fetchall()
+        if len(returned_data) > 10:
+            break
+        counter += 0.05
+
+    cur.close()
+    conn.close()
+
+    dinner_scores = []
+    for chosen_food_match in returned_data:
+        dinner_nutrition = array(chosen_food_match[:6])
+        dinner_goal_offset = dinner_nutrition_target - dinner_nutrition
+        dinner_score = sum( (abs(dinner_goal_offset/daily_nutrition_goal))**0.5 )
+        dinner_scores.append(dinner_score)
+    dinner_scores = array(dinner_scores)
+    try:
+        best_dinner_index = where(dinner_scores == dinner_scores.min())[0][0]
+    except:
+        return -1, [], [], [-1, -1, -1, -1, -1, -1]
+    
+    best_dinner_calories = returned_data[best_dinner_index][0]
+    best_dinner_carbohydrate = returned_data[best_dinner_index][1]
+    best_dinner_fat = returned_data[best_dinner_index][2]
+    best_dinner_protein = returned_data[best_dinner_index][3]
+    best_dinner_sugar = returned_data[best_dinner_index][4]
+    best_dinner_fiber = returned_data[best_dinner_index][5]
+    
+    best_dinner_nutrition = (best_dinner_calories, best_dinner_carbohydrate,
+        best_dinner_fat, best_dinner_protein, best_dinner_sugar, best_dinner_fiber)
+    best_dinner_desc_list = returned_data[best_dinner_index][6].split("|")
+    best_dinner_portion_list = returned_data[best_dinner_index][7].split("|")
+    best_dinner_score = dinner_scores[best_dinner_index]
+    return best_dinner_score, best_dinner_desc_list, best_dinner_portion_list, best_dinner_nutrition
 
  
 # clusters = pickle.load(open("../food_clustering_results/many_clusters.p", "rb"))
