@@ -25,7 +25,7 @@
 <style>
     .jumbotron-special{
         width:100%;
-        height: 340px;
+
         padding:0px;
         margin:0px;
         opacity: 0.7;
@@ -48,7 +48,7 @@
 <style>
     .jumbotron-special-dinner-nutrition{
         width:100%;
-        height: 180px;
+        height: 100px;
         background-color:#FFEBCC;
         padding:0px;
         margin:0px;
@@ -63,7 +63,7 @@
 
 
 <body style="">
-    <div class="container">
+    <div class="container-fluid">
         <div class="jumbotron jumbotron-special">
             <p class="bottom-three">What's for Dinner</p>
             <form id='myform' method='POST' action='' role="form" class="form-inline form-small">
@@ -104,164 +104,253 @@
                
                 <p></p>
                 <p>
-                    <input id='mybutton' class="btn btn-success" type='submit' value="What's for Dinner?">
+                    <select name='cuisine_choice' id='cuisine_choice' class="form-control">
+                        {% if cuisine_choice == "r" %}
+                            <option value="r" selected="selected">Surprise!</option>
+                        {% else %}
+                            <option value="r">Surprise!</option>
+                        {% endif %}
+                        {% if cuisine_choice == "c" %}
+                            <option value="c" selected="selected">Classic American</option>
+                        {% else %}
+                            <option value="c">Classic American</option>
+                        {% endif %}
+                        {% if cuisine_choice == "as" %}
+                            <option value="as" selected="selected">American Southern</option>
+                        {% else %}
+                            <option value="as">American Southern</option>
+                        {% endif %}
+                        {% if cuisine_choice == "i" %}
+                            <option value="i" selected="selected">Italian + Salad</option>
+                        {% else %}
+                            <option value="i">Italian + Salad</option>
+                        {% endif %}
+                        {% if cuisine_choice == "a" %}
+                            <option value="a" selected="selected">Asian</option>
+                        {% else %}
+                            <option value="a">Asian</option>
+                        {% endif %}
+                        {% if cuisine_choice == "m" %}
+                            <option value="m" selected="selected">Mexican</option>
+                        {% else %}
+                            <option value="m">Mexican</option>
+                        {% endif %}
+                        {% if cuisine_choice == "s" %}
+                            <option value="s" selected="selected">Seafood</option>
+                        {% else %}
+                            <option value="s">Seafood</option>
+                        {% endif %}
+                        {% if cuisine_choice == "b" %}
+                            <option value="b" selected="selected">Breakfast for Dinner</option>
+                        {% else %}
+                            <option value="b">Breakfast for Dinner</option>
+                        {% endif %}
+                    </select>
+                     <input id='mybutton' class="btn btn-success" type='submit' value="What's for Dinner?"> <img src="{{ url_for('static', filename='WFD_logo_very_small.png') }}" />
                 </p>
+                
+                
             </form>
         </div>
     </div> 
 </body>
 
 
-{% if dinner_nutrition_target[0] %}
-<body style="">
-    <div class="container">
-        <div class="jumbotron jumbotron-special-small">
-            <div class="col-xs-12">
-                <h2 class="sub-header">Dinner nutrition target</h2>
-                <div class="table-responsive">
-                    <table class="table table-striped" align="center">
-                        <thead>
-                            <tr>
-                                <th><div class="text-center">Calories</div></th>
-                                <th><div class="text-center">Carbs (g)</div></th>
-                                <th><div class="text-center">Fat (g)</div></th>
-                                <th><div class="text-center">Protein (g)</div></th>
-                                <th><div class="text-center">Sugar (g)</div></th>
-                                <th><div class="text-center">Fiber (g)</div></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <td><div class="text-center">{{dinner_nutrition_target[0]}}</div></td>
-                            <td><div class="text-center">{{dinner_nutrition_target[1]}}</div></td>
-                            <td><div class="text-center">{{dinner_nutrition_target[2]}}</div></td>
-                            <td><div class="text-center">{{dinner_nutrition_target[3]}}</div></td>
-                            <td><div class="text-center">{{dinner_nutrition_target[4]}}</div></td>
-                            <td><div class="text-center">{{dinner_nutrition_target[5]}}</div></td>
-                        </tbody>
-                    </table>
+
+
+{%if create_dinners_flag %}
+
+    {% if dinner_nutrition_target[0] %}
+    <body style="">
+        <div class="container">
+            <div class="jumbotron jumbotron-special-small">
+                <div class="col-xs-1">
+                </div>
+                <div class="col-xs-10">
+                    <h2 class="sub-header">Dinner nutrition target</h2>
+                    <div class="table-responsive">
+                        <table class="table table-striped" align="center">
+                            <thead>
+                                <tr>
+                                    <th><div class="text-center">Calories</div></th>
+                                    <th><div class="text-center">Carbs (g)</div></th>
+                                    <th><div class="text-center">Fat (g)</div></th>
+                                    <th><div class="text-center">Protein (g)</div></th>
+                                    <th><div class="text-center">Sugar (g)</div></th>
+                                    <th><div class="text-center">Fiber (g)</div></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <td><div class="text-center">{{dinner_nutrition_target[0]}}</div></td>
+                                <td><div class="text-center">{{dinner_nutrition_target[1]}}</div></td>
+                                <td><div class="text-center">{{dinner_nutrition_target[2]}}</div></td>
+                                <td><div class="text-center">{{dinner_nutrition_target[3]}}</div></td>
+                                <td><div class="text-center">{{dinner_nutrition_target[4]}}</div></td>
+                                <td><div class="text-center">{{dinner_nutrition_target[5]}}</div></td>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-xs-1">
                 </div>
             </div>
         </div>
-    </div>
-</body>
+    </body>
 
-{% endif %}
-
-
-
-
-<body style="">
-    <div class="container">
-        <div class="col-xs-6">
-            <h2 class="sub-header">Generated dinner score {{ dinner_simple_score }}</h2>
-            <div class="table-responsive">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Food Item</th>
-                            <th>Portion</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {% for line in data %}
-                        <tr>
-                        {% for col in line %}
-                            <td>{{col}}</td>
-                        {% endfor %}
-                        </tr>
-                    {% endfor %} 
-                    </tbody>
-                </table>
-          </div>
-        </div>
-        <div class="col-xs-6">
-            <h2 class="sub-header">Best historical dinner score {{ hist_dinner_simple_score }}</h2>
-            <div class="table-responsive">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Food Item</th>
-                            <th>Portion</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {% for line in hist_data %}
-                        <tr>
-                        {% for col in line %}
-                            <td>{{col}}</td>
-                        {% endfor %}
-                        </tr>
-                    {% endfor %} 
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</body>
+    {% endif %}
 
 
 
 
-
-
-
-<body style="">
-    <div class="container">
-        <div class="jumbotron jumbotron-special-dinner-nutrition">
+    <body style="">
+        <div class="container-fluid">
             <div class="col-xs-6">
-                <h2 class="sub-header">Generated dinner nutrition</h2>
+                <h2 class="sub-header">Generated dinner score {{ dinner_simple_score }}</h2>
                 <div class="table-responsive">
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th>Calories</th>
-                                <th>Carbs (g)</th>
-                                <th>Fat (g)</th>
-                                <th>Protein (g)</th>
-                                <th>Sugar (g)</th>
-                                <th>Fiber (g)</th>
+                                <th>Food Item</th>
+                                <th>Portion</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <td><font color="{{dinner_colors[0]}}">{{dinner_nutrition_data[0]}}</font></td>
-                            <td><font color="{{dinner_colors[1]}}">{{dinner_nutrition_data[1]}}</font></td>
-                            <td><font color="{{dinner_colors[2]}}">{{dinner_nutrition_data[2]}}</font></td>
-                            <td><font color="{{dinner_colors[3]}}">{{dinner_nutrition_data[3]}}</font></td>
-                            <td><font color="{{dinner_colors[4]}}">{{dinner_nutrition_data[4]}}</font></td>
-                            <td><font color="{{dinner_colors[5]}}">{{dinner_nutrition_data[5]}}</font></td>
+                        {% for line in data %}
+                            <tr>
+                            {% for col in line %}
+                                <td>{{col}}</td>
+                            {% endfor %}
+                            </tr>
+                        {% endfor %} 
                         </tbody>
                     </table>
               </div>
             </div>
             <div class="col-xs-6">
-                <h2 class="sub-header">Best historical dinner nutrition</h2>
+                <h2 class="sub-header">Best historical dinner score {{ hist_dinner_simple_score }}</h2>
                 <div class="table-responsive">
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th>Calories</th>
-                                <th>Carbs (g)</th>
-                                <th>Fat (g)</th>
-                                <th>Protein (g)</th>
-                                <th>Sugar (g)</th>
-                                <th>Fiber (g)</th>
+                                <th>Food Item</th>
+                                <th>Portion</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <td><font color="{{hist_dinner_colors[0]}}">{{hist_dinner_nutrition_data[0]}}</font></td>
-                            <td><font color="{{hist_dinner_colors[1]}}">{{hist_dinner_nutrition_data[1]}}</font></td>
-                            <td><font color="{{hist_dinner_colors[2]}}">{{hist_dinner_nutrition_data[2]}}</font></td>
-                            <td><font color="{{hist_dinner_colors[3]}}">{{hist_dinner_nutrition_data[3]}}</font></td>
-                            <td><font color="{{hist_dinner_colors[4]}}">{{hist_dinner_nutrition_data[4]}}</font></td>
-                            <td><font color="{{hist_dinner_colors[5]}}">{{hist_dinner_nutrition_data[5]}}</font></td>
+                        {% for line in hist_data %}
+                            <tr>
+                            {% for col in line %}
+                                <td>{{col}}</td>
+                            {% endfor %}
+                            </tr>
+                        {% endfor %} 
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-    </div>
-</body>
+    </body>
 
+
+
+
+
+
+    <body style="">
+        <div class="container-fluid">
+            <div class="jumbotron jumbotron-special-dinner-nutrition">
+                <div class="col-xs-5">
+                    <!-- <h2 class="sub-header">Generated dinner nutrition</h2> -->
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Calories</th>
+                                    <th>Carbs</th>
+                                    <th>Fat</th>
+                                    <th>Protein</th>
+                                    <th>Sugar</th>
+                                    <th>Fiber</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <td><font color="{{dinner_colors[0]}}">{{dinner_nutrition_data[0]}}</font></td>
+                                <td><font color="{{dinner_colors[1]}}">{{dinner_nutrition_data[1]}}</font></td>
+                                <td><font color="{{dinner_colors[2]}}">{{dinner_nutrition_data[2]}}</font></td>
+                                <td><font color="{{dinner_colors[3]}}">{{dinner_nutrition_data[3]}}</font></td>
+                                <td><font color="{{dinner_colors[4]}}">{{dinner_nutrition_data[4]}}</font></td>
+                                <td><font color="{{dinner_colors[5]}}">{{dinner_nutrition_data[5]}}</font></td>
+                            </tbody>
+                        </table>
+                  </div>
+                </div>
+                {% if dinner_simple_score > hist_dinner_simple_score %}
+                    <div class="col-xs-2">
+                        <p style="font-size: 16px; text-align:center">Generated dinner preferred</p>
+                        <div style="text-align: left;">
+                            <span class="genericon genericon-leftarrow" style="font-size: 24px; color: blue;"></span>
+                        </div>
+                    </div>
+                {% elif dinner_simple_score < hist_dinner_simple_score %}
+                    <div class="col-xs-2">
+                        <p style="font-size: 16px; text-align:center">Historical dinner preferred</p>
+                        <div style="text-align: right;">
+                            <span class="genericon genericon-rightarrow" style="font-size: 24px; color: blue;"></span>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="col-xs-2">
+                        <div style="text-align: center;">
+                            <p style="font-size: 16px;">Equal scores</p>
+                        </div>
+                        <div style="text-align: center;">
+                            <span class="genericon genericon-heart" style="font-size: 36px; color: red;"></span>
+                        </div>
+                    </div>
+                {% endif %}
+                <div class="col-xs-5">
+                    <!-- <h2 class="sub-header">Best historical dinner nutrition</h2> -->
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Calories</th>
+                                    <th>Carbs</th>
+                                    <th>Fat</th>
+                                    <th>Protein</th>
+                                    <th>Sugar</th>
+                                    <th>Fiber</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <td><font color="{{hist_dinner_colors[0]}}">{{hist_dinner_nutrition_data[0]}}</font></td>
+                                <td><font color="{{hist_dinner_colors[1]}}">{{hist_dinner_nutrition_data[1]}}</font></td>
+                                <td><font color="{{hist_dinner_colors[2]}}">{{hist_dinner_nutrition_data[2]}}</font></td>
+                                <td><font color="{{hist_dinner_colors[3]}}">{{hist_dinner_nutrition_data[3]}}</font></td>
+                                <td><font color="{{hist_dinner_colors[4]}}">{{hist_dinner_nutrition_data[4]}}</font></td>
+                                <td><font color="{{hist_dinner_colors[5]}}">{{hist_dinner_nutrition_data[5]}}</font></td>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+
+{% else %}
+
+    <body style="">
+        <div class="container">
+            <div class="jumbotron jumbotron-special-small">
+                <div class="col-xs-12">
+                    <h2 class="sub-header"><font color="red">{{ error_text[0] }}</font></h2>
+                    <h2 class="sub-header">{{ error_text[1] }}</h2>
+                </div>
+            </div>
+        </div>
+    </body>
+
+{% endif %}
 
 
 

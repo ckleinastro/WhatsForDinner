@@ -74,9 +74,6 @@ def recommend_dinner(dinner_nutrition_target, daily_nutrition_goal, model, clust
         else:
             seed_dinners.append(random_dinner(random.choice([4, 5, 6]), model, clusters))
 
-
-
-
     dinner_list_with_scores = []
     conn = pymysql.connect(host='127.0.0.1', port=3306, user='root', passwd='', 
                            db='food_consumption')
@@ -218,3 +215,19 @@ def historical_dinner_match(dinner_nutrition_target, daily_nutrition_goal):
 # r_dinner.print_meal_table()
 # 
 # print dinner_nutrition_target
+# 
+# 
+# 
+# tagged_clusters = []
+# tags = []
+# tagged_clusters_file = file("/Users/cklein/Desktop/insight_project/webapp/food_clustering_results/clusters.txt", "r")
+# for line in tagged_clusters_file:
+#     tag = line.split("|")[0]
+#     food_array = array(line.split("|")[1:-1])
+#     tags.append(tag.rstrip())
+#     tagged_clusters.append(food_array)
+# tagged_clusters_file.close()
+# tags = array(tags)
+# tagged_clusters = array(tagged_clusters)
+
+

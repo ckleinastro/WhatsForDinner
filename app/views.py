@@ -28,6 +28,11 @@ def index():
     
     f = request.form
     
+    for key in f.keys():
+        for value in f.getlist(key):
+            print key,":",value
+    
+    
     try:
         nutrition_data[0] = float(f["consumed_calories"])
     except:
@@ -77,7 +82,36 @@ def index():
         goal_nutrition_data[5] = float(f["goal_fiber"])
     except:
         goal_nutrition_data[5] = 38
-            
+    
+    create_dinners_flag = True
+    if nutrition_data[0] == 0:
+        create_dinners_flag = False
+        error_text = ["Consumed calories required.", "Unless entered, other values will auto-fill based on consumed calories."]
+        return render_template('index.html', create_dinners_flag=create_dinners_flag,
+            nutrition_data=nutrition_data, 
+            goal_nutrition_data=goal_nutrition_data,
+            error_text=error_text)
+    
+    # auto-fill carbohydrate
+    if nutrition_data[1] == 0:
+        nutrition_data[1] = nutrition_data[0]*0.1225
+        
+    # auto-fill fat
+    if nutrition_data[2] == 0:
+        nutrition_data[2] = nutrition_data[0]*0.0325
+    
+    # auto-fill protein
+    if nutrition_data[3] == 0:
+        nutrition_data[3] = nutrition_data[0]*0.049
+        
+    # auto-fill sugar
+    if nutrition_data[4] == 0:
+        nutrition_data[4] = nutrition_data[0]*0.037
+
+    # auto-fill fiber
+    if nutrition_data[5] == 0:
+        nutrition_data[5] = nutrition_data[0]*0.019
+    
     random_dinner_flag = False
     data = []
     
@@ -85,6 +119,28 @@ def index():
     daily_nutrition_goal = array(goal_nutrition_data)
     
     clusters = pickle.load(open("food_clustering_results/many_clusters.p", "rb"))
+    
+    tagged_clusters = []
+    tags = []
+    tagged_clusters_file = file("food_clustering_results/clusters.txt", "r")
+    for line in tagged_clusters_file:
+        tag = line.split("|")[0]
+        food_array = array(line.split("|")[1:-1])
+        tags.append(tag.rstrip())
+        tagged_clusters.append(food_array)
+    tagged_clusters_file.close()
+    tags = array(tags)
+    tagged_clusters = array(tagged_clusters)
+    
+    # print "Cuisine choice:", f["cuisine_choice"]
+    cuisine_choice = f["cuisine_choice"]
+    if cuisine_choice == "r":
+        clusters = tagged_clusters
+    else:
+        clusters = tagged_clusters[tags==cuisine_choice]
+    
+    print len(clusters)
+    
     model = gword2vec.Word2Vec.load_word2vec_format('food_clustering_results/dinner_associations.bin', binary=True)
     
     dinner_nutrition_target = daily_nutrition_goal - previous_consumed_nutrition
@@ -158,12 +214,22 @@ def index():
         dinner_simple_score=5
     if hist_dinner_simple_score > 5:
         hist_dinner_simple_score=5
-        
-    return render_template('index.html', nutrition_data=nutrition_data, goal_nutrition_data=goal_nutrition_data,
+    
+    return render_template('index.html', create_dinners_flag=create_dinners_flag,
+        nutrition_data=nutrition_data, 
+        goal_nutrition_data=goal_nutrition_data,
+        cuisine_choice=cuisine_choice,
         dinner_nutrition_target=dinner_nutrition_target,
-        score=score_str, data=data, dinner_nutrition_data=dinner_nutrition_data, dinner_colors=dinner_colors,
-        hist_score_str=hist_score_str, hist_data=hist_data, hist_dinner_nutrition_data=hist_dinner_nutrition_data, hist_dinner_colors=hist_dinner_colors, 
-        dinner_simple_score=dinner_simple_score, hist_dinner_simple_score=hist_dinner_simple_score)
+        score=score_str, 
+        data=data, 
+        dinner_nutrition_data=dinner_nutrition_data, 
+        dinner_colors=dinner_colors,
+        hist_score_str=hist_score_str, 
+        hist_data=hist_data, 
+        hist_dinner_nutrition_data=hist_dinner_nutrition_data, 
+        hist_dinner_colors=hist_dinner_colors, 
+        dinner_simple_score=dinner_simple_score, 
+        hist_dinner_simple_score=hist_dinner_simple_score)
 
 
 
