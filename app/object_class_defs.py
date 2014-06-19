@@ -50,7 +50,7 @@ class FoodItem:
     
     def print_summary(self):
         print "%s" % self.short_desc
-        nutrition_list.print_summary()
+        self.nutrition_list.print_summary()
 
 class MealRecord:
     'Full components of a dinner'
