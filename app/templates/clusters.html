@@ -2,17 +2,6 @@
 
 {% block head %}
 
-<style>
-  .bottom-three {
-     margin-top: 0.75cm;
-  }
-
-</style>
-
-
-
-
-
 <head>
 	<script type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.8.2.min.js') }}"></script>
 	<script type="text/javascript" src="{{ url_for('static', filename='js/d3.v2.js') }}"></script>
@@ -34,11 +23,11 @@
 	</script>
 	
 	<style>
-	html, body { margin: 0; padding: 0; }
+	html, body { height: 100%;  overflow-y: auto;}
 		
 	.container { overflow: hidden; margin: 0px; }
 	
-	.chart { float: left; width: 300px; height: 300px; background: #eee; margin: 0 0px 0 0; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
+	.chart { float: left; width: 300px; height: 300px; background: #eee; margin: 0px; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
 	
 	svg { width: 100%; height: 100%; }
 	
@@ -61,9 +50,6 @@
     </style>
 
     <style>
-        body {
-          font: 10px sans-serif;
-        }
 
         .bar rect {
           fill: steelblue;
@@ -82,6 +68,7 @@
     </style>
     
     <script src="http://d3js.org/d3.v3.min.js"></script>
+
 
 </head>
 
@@ -189,69 +176,71 @@
 	</div>
     
     <div class="container-fluid">
-        <div style="width:900px; margin:0 auto;">
-            <div class="container-fluid">
-                <script>
-                        // Generate a Bates distribution of 10 random variables.
-                        // var values = d3.range(1000).map(d3.random.bates(10));
-                        var values = {{hist_data}};
-                        // A formatter for counts.
-                        var formatCount = d3.format(",.0f");
+                    <script>
+                            // Generate a Bates distribution of 10 random variables.
+                            // var values = d3.range(1000).map(d3.random.bates(10));
+                            var values = {{hist_data}};
+                            // A formatter for counts.
+                            var formatCount = d3.format(",.0f");
 
-                        var margin = {top: 10, right: 0, bottom: 30, left: 30},
-                            width = 930 - margin.left - margin.right,
-                            height = 340 - margin.top - margin.bottom;
+                            var margin = {top: 10, right: 0, bottom: 30, left: 30},
+                                width = 930 - margin.left - margin.right,
+                                height = 340 - margin.top - margin.bottom;
 
-                        var x = d3.scale.linear()
-                            .domain([0, {{hist_bound}}])
-                            .range([0, width]);
+                            var x = d3.scale.linear()
+                                .domain([0, {{hist_bound}}])
+                                .range([0, width]);
 
-                        // Generate a histogram using twenty uniformly-spaced bins.
-                        var data = d3.layout.histogram()
-                            .bins({{hist_bin_thresholds}})
-                            (values);
+                            // Generate a histogram using twenty uniformly-spaced bins.
+                            var data = d3.layout.histogram()
+                                .bins({{hist_bin_thresholds}})
+                                (values);
 
-                        var y = d3.scale.linear()
-                            .domain([0, d3.max(data, function(d) { return d.y; })])
-                            .range([height, 0]);
+                            var y = d3.scale.linear()
+                                .domain([0, d3.max(data, function(d) { return d.y; })])
+                                .range([height, 0]);
 
-                        var xAxis = d3.svg.axis()
-                            .scale(x)
-                            .orient("bottom");
+                            var xAxis = d3.svg.axis()
+                                .scale(x)
+                                .orient("bottom");
+                        
+                            var svg = d3.select("body").append("svg")
+                                .attr("width", width + margin.left + margin.right)
+                                .attr("height", height + margin.top + margin.bottom)
+                                .style("height", "340px")
+                                .append("g")
+                                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-                        var svg = d3.select("body").append("svg")
-                            .attr("width", width + margin.left + margin.right)
-                            .attr("height", height + margin.top + margin.bottom)
-                            .style("height", "340px")
-                            .append("g")
-                            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+                            var bar = svg.selectAll(".bar")
+                                .data(data)
+                                .enter().append("g")
+                                .attr("class", "bar")
+                                .attr("transform", function(d) { return "translate(" + x(d.x) + "," + y(d.y) + ")"; });
 
-                        var bar = svg.selectAll(".bar")
-                            .data(data)
-                            .enter().append("g")
-                            .attr("class", "bar")
-                            .attr("transform", function(d) { return "translate(" + x(d.x) + "," + y(d.y) + ")"; });
+                            bar.append("rect")
+                                .attr("x", 1)
+                                .attr("width", x(data[0].dx) - 1)
+                                .attr("font-family","sans-serif")
+                                .attr("font-size", "10")
+                                .attr("height", function(d) { return height - y(d.y); });
 
-                        bar.append("rect")
-                            .attr("x", 1)
-                            .attr("width", x(data[0].dx) - 1)
-                            .attr("height", function(d) { return height - y(d.y); });
+                            bar.append("text")
+                                .attr("dy", ".75em")
+                                .attr("y", 6)
+                                .attr("x", x(data[0].dx) / 2)
+                                .attr("text-anchor", "middle")
+                                .attr("font-family","sans-serif")
+                                .attr("font-size", "10")
+                                .text(function(d) { return formatCount(d.y); });
+                        
+                            svg.append("g")
+                                .attr("class", "x axis")
+                                .attr("transform", "translate(0," + height + ")")
+                                .attr("font-family","sans-serif")
+                                .attr("font-size", "20")
+                                .call(xAxis);
 
-                        bar.append("text")
-                            .attr("dy", ".75em")
-                            .attr("y", 6)
-                            .attr("x", x(data[0].dx) / 2)
-                            .attr("text-anchor", "middle")
-                            .text(function(d) { return formatCount(d.y); });
-
-                        svg.append("g")
-                            .attr("class", "x axis")
-                            .attr("transform", "translate(0," + height + ")")
-                            .call(xAxis);
-
-                </script>
-            </div>
-        </div>
+                    </script>
     </div>
 </body>
 

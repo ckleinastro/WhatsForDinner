@@ -5,16 +5,24 @@
         <div class="container">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-2">
                     </div>
                     <div class="col-md-8">
                     <img src="{{ url_for('static', filename='food_connections_annotated.pdf') }}"
                          class="img-responsive" height="600px" width="3600px"/>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-md-2">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-1">
+                    </div>
+                    <div class="col-md-10">
                     <h3 class="text-justify text-muted">Network map of the food clusters illustrating unsupervised, machine-learned cuisines.</h3>
                     <p class="lead">These are the clusters found with word2vec, with cuisine names added afterwards by human intelligence. Each circle denotes a food term applied in the word2vec vocabulary list. The radius of the circles indicates degree (larger circles have more incident connections).</p>
                     <p class="lead">The relative clustering locations and linkage patterns are very informative about the cuisines Americans eat and how they structure their dinners. For example, the Mexican and Asian clusters are very self-contained, with few connections to other cuisines. Additionally, these clusters have small circles near their outer regions with most connections pointing inward towards other cluster members. This illustrates how these cuisines have foods that are paired very predominantly with other foods in the same cuisines cluster (Mexican example: salsa, mole poblano, and Spanish rice).</p>
+                    </div>
+                    <div class="col-md-1">
                     </div>
                 </div>
             </div>
