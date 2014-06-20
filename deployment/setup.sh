@@ -81,9 +81,9 @@ setup_nginx () {
     # Replaces the nginx default file
     sudo rm /etc/nginx/sites-available/default
     sudo rm /etc/nginx/sites-enabled/default
-    sudo touch /etc/nginx/sites-available/insightfl
+    sudo touch /etc/nginx/sites-available/WhatsForDinner
 
-    sudo bash -c 'cat > /etc/nginx/sites-available/insightfl <<- _EOF_
+    sudo bash -c 'cat > /etc/nginx/sites-available/WhatsForDinner <<- _EOF_
     server {
       listen 80;
 
@@ -98,7 +98,7 @@ setup_nginx () {
     }'
 
     # Creates a sudo link to sites-enabled
-    sudo ln -s /etc/nginx/sites-available/insightfl /etc/nginx/sites-enabled/insightfl
+    sudo ln -s /etc/nginx/sites-available/WhatsForDinner /etc/nginx/sites-enabled/WhatsForDinner
 
     # Starts nginx
     sudo service nginx start
@@ -134,10 +134,10 @@ main () {
         echo $'\e[31m'"Please enter a github username"$'\e[0m'
         main
     else
-        read -p $'\e[32m'"Enter the github repository name [insightfl] > "$'\e[0m' project
+        read -p $'\e[32m'"Enter the github repository name [WhatsForDinner] > "$'\e[0m' project
 
-        # Default project name is 'insightfl'
-        project=${project:="insightfl"}
+        # Default project name is 'WhatsForDinner'
+        project=${project:="WhatsForDinner"}
         project_dir=$HOME/$project
         status=$(curl -s -I "https://github.com/$username/$project" | head -n 1 | cut -d$' ' -f2)
 
