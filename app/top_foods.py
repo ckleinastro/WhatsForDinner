@@ -1,11 +1,11 @@
 import pymysql
 import collections
 from numpy import array, ma, mean
+from app import host, port, user, passwd, db
 
 def top_eight_foods(cuisine_code, nutrient, hist_bound_min, hist_bound):
     if nutrient == "carbohydrates": nutrient = "carbohydrate"
-    conn = pymysql.connect(host='127.0.0.1', port=3306, user='root', passwd='', 
-                       db='food_consumption')
+    conn = pymysql.connect(host=host, port=port, user=user, passwd=passwd, db=db)
     cur = conn.cursor()
 
     if cuisine_code == "h":

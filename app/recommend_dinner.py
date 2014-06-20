@@ -6,6 +6,7 @@ import pymysql
 import sys
 import re
 from object_class_defs import MealRecord, FoodItem, NutritionList, PortionList, Portion
+from app import host, port, user, passwd, db
 
 def themed_dinner(target_num_items, model, clusters, chosen_cluster=-1):
     n_clusters = len(clusters)
@@ -75,8 +76,7 @@ def recommend_dinner(dinner_nutrition_target, daily_nutrition_goal, model, clust
             seed_dinners.append(random_dinner(random.choice([4, 5, 6]), model, clusters))
 
     dinner_list_with_scores = []
-    conn = pymysql.connect(host='127.0.0.1', port=3306, user='root', passwd='', 
-                           db='food_consumption')
+    conn = pymysql.connect(host=host, port=port, user=user, passwd=passwd, db=db)
     cur = conn.cursor()
     for t_dinner in seed_dinners:
         food_item_list = []
@@ -126,8 +126,7 @@ def recommend_dinner(dinner_nutrition_target, daily_nutrition_goal, model, clust
 
 def historical_dinner_match(dinner_nutrition_target, daily_nutrition_goal):
     dinner_list_with_scores = []
-    conn = pymysql.connect(host='127.0.0.1', port=3306, user='root', passwd='', 
-                           db='food_consumption')
+    conn = pymysql.connect(host=host, port=port, user=user, passwd=passwd, db=db)
     cur = conn.cursor()
 
     counter = 0.1
@@ -189,8 +188,7 @@ def historical_dinner_match(dinner_nutrition_target, daily_nutrition_goal):
 
 def generated_dinner_match(dinner_nutrition_target, daily_nutrition_goal, cuisine_code):
 
-    conn = pymysql.connect(host='127.0.0.1', port=3306, user='root', passwd='', 
-                           db='food_consumption')
+    conn = pymysql.connect(host=host, port=port, user=user, passwd=passwd, db=db)
     cur = conn.cursor()
     
     counter = 0.5
@@ -267,7 +265,7 @@ def generated_dinner_match(dinner_nutrition_target, daily_nutrition_goal, cuisin
     if len(simple_dinner_scores) == 0:
         return -1, [], [], [-1, -1, -1, -1, -1, -1]
     best_simple_dinner_score = simple_dinner_scores.max()
-    print best_simple_dinner_score
+
     if sum(simple_dinner_scores>=(best_simple_dinner_score)) > 10:
         best_dinner_index = random.choice(where(simple_dinner_scores>=(best_simple_dinner_score))[0].tolist())
     elif sum(simple_dinner_scores>=(best_simple_dinner_score-0.5)) > 10:

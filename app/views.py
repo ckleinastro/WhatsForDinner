@@ -105,7 +105,7 @@ def index():
         half_score_flag = False
         
     int_dinner_simple_score = int(dinner_simple_score)
-    print dinner_simple_score%0.5, half_score_flag
+
     return render_template('index.html', create_dinners_flag=create_dinners_flag,
         consumed_calories=consumed_calories, 
         goal_nutrition_data=goal_nutrition_data,
@@ -404,7 +404,7 @@ def show_cluster_analysis():
     hist_data = loadtxt("food_clustering_results/%s_%s.txt" % (cuisine_choice, nutrient_choice))
 
     hist_data = hist_data[(hist_data<hist_bound) & (hist_data>hist_bound_min)]
-    print hist_bound_min, hist_bound
+
     hist_bin_thresholds = histogram(hist_data, range=[hist_bound_min, hist_bound], bins=25)[1].tolist()
     hist_data = hist_data.tolist()
     
@@ -415,10 +415,6 @@ def show_cluster_analysis():
             top_five_foods.append([top_foods_list[n][0], "%.2f" % (top_foods_list[n][1]) ])
     else:
         top_five_foods = []
-    
-    print hist_bound_min, hist_bound
-    print hist_bin_thresholds
-    print min(hist_data), max(hist_data)
     
     # Renders clusters.html.
     return render_template('clusters.html', 
