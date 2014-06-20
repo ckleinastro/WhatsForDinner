@@ -1,0 +1,53 @@
+{
+  "type": "network",
+  "version": "1.0",
+  "data": "static/network/data.json",
+  "logo": {
+    "text": "Christopher Klein",
+    "file": "",
+    "link": ""
+  },
+  "text": {
+    "title": "Dinner Cuisine Network Map",
+    "more": "",
+    "intro": "Network map of foods using terms extracting from the USDA food nutrition database and 10 years of real American dinners survey data (30,000+ meals). Survey data is What We Eat In America, collated data releases from 2000-2010. The clusters were learned on the descriptions of the dinner food items using word2vec. word2vec is a machine learning program that uses the continuous Skip-gram model and neural networks to create feature vectors for words that describe their relative relationships.\t"
+  },
+  "legend": {
+    "edgeLabel": "Common Pairing",
+    "colorLabel": "Human-labeled Cuisine Type",
+    "nodeLabel": "Food Clustering Term"
+  },
+  "features": {
+    "search": true,
+    "groupSelectorAttribute": "color",
+    "hoverBehavior": "default"
+  },
+  "informationPanel": {
+    "imageAttribute": "Label",
+    "groupByEdgeDirection": false
+  },
+  "sigma": {
+    "graphProperties": {
+      "minEdgeSize": 0.2,
+      "maxNodeSize": 7,
+      "maxEdgeSize": 0.5,
+      "minNodeSize": 1
+    },
+    "drawingProperties": {
+      "labelThreshold": 10,
+      "hoverFontStyle": "bold",
+      "defaultEdgeType": "curve",
+      "defaultLabelColor": "#000",
+      "defaultLabelHoverColor": "#fff",
+      "defaultLabelSize": 14,
+      "activeFontStyle": "bold",
+      "fontStyle": "bold",
+      "defaultHoverLabelBGColor": "#002147",
+      "defaultLabelBGColor": "#ddd"
+    },
+    "mouseProperties": {
+      "minRatio": 0.75,
+      "maxRatio": 20
+    }
+  }
+}

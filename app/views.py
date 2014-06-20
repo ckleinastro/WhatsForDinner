@@ -2,6 +2,7 @@ from flask import render_template, request
 from app import app, host, port, user, passwd, db
 from app.helpers.database import con_db
 from app.recommend_dinner import recommend_dinner, historical_dinner_match, generated_dinner_match
+from app.top_foods import top_eight_foods
 
 from flask import flash, redirect
 
@@ -329,6 +330,11 @@ def show_cluster_analysis():
     f = request.form
     
     try:
+        calc_top_flag = f["calc_top_flag"]
+    except:
+        calc_top_flag = False
+            
+    try:
         cuisine_choice = f["cuisine_choice"]
     except:
         cuisine_choice = "r"
@@ -338,17 +344,52 @@ def show_cluster_analysis():
     except:
         nutrient_choice = "calories"
     
-    print cuisine_choice, nutrient_choice
+    try:
+        hist_bound = int(f["hist_bound"])
+    except:
+        if nutrient_choice == "calories": hist_bound = 4000
+        if nutrient_choice == "carbohydrates": hist_bound = 500
+        if nutrient_choice == "fat": hist_bound = 200
+        if nutrient_choice == "protein": hist_bound = 200
+        if nutrient_choice == "sugar": hist_bound = 200
+        if nutrient_choice == "fiber": hist_bound = 50
+        else:
+            hist_bound = 4000
+    try:
+        hist_bound_min = int(f["hist_bound_min"])
+    except:
+        hist_bound_min = 0
+
+
+    if nutrient_choice == "calories" and hist_bound > 4000:
+        hist_bound = 4000
+    if nutrient_choice == "carbohydrates" and hist_bound > 500:
+        hist_bound = 500
+    if nutrient_choice == "fat" and hist_bound > 200:
+        hist_bound = 200
+    if nutrient_choice == "protein" and hist_bound > 200:
+        hist_bound = 200
+    if nutrient_choice == "sugar" and hist_bound > 200:
+        hist_bound = 200
+    if nutrient_choice == "fiber" and hist_bound > 50:
+        hist_bound = 50
     
-    pie_char_data = array([('r', 0.46091192964423006, 0.158643235781077, 0.18944281468647645),
-           ('b', 0.5802051752319279, 0.13751761389874653, 0.1338963691513483),
-           ('i', 0.4515032389154221, 0.17393232153939495, 0.17040828109485243),
-           ('s', 0.36463121176563357, 0.18871356110705398, 0.23218032495582572),
-           ('a', 0.34931124999085267, 0.19970387229354702, 0.18464774739257359),
-           ('c', 0.33452270577542714, 0.19546337240675266, 0.2223958849343472),
-           ('as', 0.46257023462263896, 0.1518491393606115, 0.209490428808256),
-           ('m', 0.45526312192356677, 0.1668691267157847, 0.1984557875065679)], 
-          dtype=[('cuisine_code', 'S2'), ('carb_cals', '<f8'), ('fat_cals', '<f8'), ('protein_cals', '<f8')])
+    if hist_bound_min > hist_bound: hist_bound_min=0
+    
+    pie_char_data = array([
+        ('r', 0.46091192964423006, 0.3569472805074319, 0.18944281468647645),
+        ('b', 0.5802051752319279, 0.30941463127217367, 0.1338963691513483),
+        ('i', 0.4515032389154221, 0.39134772346363905, 0.17040828109485243),
+        ('s', 0.36463121176563357, 0.4246055124908824, 0.23218032495582572),
+        ('a', 0.34931124999085267, 0.4493337126604725, 0.18464774739257359),
+        ('c', 0.33452270577542714, 0.43979258791519976, 0.2223958849343472),
+        ('as', 0.46257023462263896, 0.34166056356137803, 0.209490428808256),
+        ('m', 0.45526312192356677, 0.3754555351105417, 0.1984557875065679),
+        ('h', 0.43982360238932189, 0.34867959936879961, 0.20476673227122424)], 
+      dtype=[('cuisine_code', 'S2'), ('carb_cals', '<f8'), ('fat_cals', '<f8'), ('protein_cals', '<f8')])
+
+
+
     
     cuisine_specific_pie_char_data = pie_char_data[pie_char_data["cuisine_code"]==cuisine_choice]
     chart_data = []
@@ -358,22 +399,29 @@ def show_cluster_analysis():
         
     hist_data = loadtxt("food_clustering_results/%s_%s.txt" % (cuisine_choice, nutrient_choice))
 
-    if nutrient_choice == "calories": hist_bound = 4000
-    if nutrient_choice == "carbohydrates": hist_bound = 500
-    if nutrient_choice == "fat": hist_bound = 200
-    if nutrient_choice == "protein": hist_bound = 200
-    if nutrient_choice == "sugar": hist_bound = 200
-    if nutrient_choice == "fiber": hist_bound = 50
-    
-    
-    hist_bin_thresholds = histogram(hist_data, range=[0, hist_bound], bins=25)[1].tolist()
+    hist_data = hist_data[(hist_data<hist_bound) & (hist_data>hist_bound_min)]
+    print hist_bound_min, hist_bound
+    hist_bin_thresholds = histogram(hist_data, range=[hist_bound_min, hist_bound], bins=25)[1].tolist()
     hist_data = hist_data.tolist()
+    
+    if calc_top_flag:
+        top_foods_list, chart_data = top_eight_foods(cuisine_choice, nutrient_choice, hist_bound_min, hist_bound)
+        top_five_foods = []
+        for n in range(5):
+            top_five_foods.append([top_foods_list[n][0], "%.2f" % (top_foods_list[n][1]) ])
+    else:
+        top_five_foods = []
+    
+    print hist_bound_min, hist_bound
+    print hist_bin_thresholds
+    print min(hist_data), max(hist_data)
     
     # Renders clusters.html.
     return render_template('clusters.html', 
         cuisine_choice=cuisine_choice, chart_data=chart_data,
         nutrient_choice=nutrient_choice,
-        hist_data=hist_data, hist_bound=hist_bound, hist_bin_thresholds=hist_bin_thresholds)
+        hist_data=hist_data, hist_bound=hist_bound, hist_bound_min=hist_bound_min, 
+        hist_bin_thresholds=hist_bin_thresholds, top_five_foods=top_five_foods, calc_top_flag=calc_top_flag)
 
 @app.route('/clustersmap')
 def clustersmap():
@@ -384,6 +432,12 @@ def clustersmap():
 def contact():
     # Renders author.html.
     return render_template('author.html')
+
+@app.route('/network')
+def show_cluster_network():
+    # Renders author.html.
+    return render_template('network.html')
+
 
 @app.errorhandler(404)
 def page_not_found(error):

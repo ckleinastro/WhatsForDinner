@@ -7,6 +7,14 @@
 {% block head %}
 
 <head>
+    <style>
+        .center {
+            margin-left: auto;
+            margin-right: auto;
+            width: 70%;
+            background-color: #fff;
+        }
+    </style>
 
 	<script type="text/javascript">
 	var get_data	= function()
@@ -89,13 +97,14 @@
 
 <body>
 	<div class="container-fluid">
-        <div style="width:600px; margin:0 auto;">
+        <div class="center">
             <h4><li>Select a cuisine type to calculate a pie chart breakdown of average dinner calorie sources for dinners generated from that cuisine cluster.</li></h4>
             <h4><li>Select a nutrient category to calculate a histogram of average dinner content for that nutrient (and within the selected cuisine cluster).</li></h4>
         </div>
-	    <div style="width:264px; margin:0 auto;">
-            <form id='myform' method='POST' action='' role="form" class="form-inline form-small">
-                <select name='cuisine_choice' id='cuisine_choice' class="form-control" onchange="this.form.submit()">
+	    <div class="center">
+            <form id='myform' method='POST' action='' role="form" class="form-inline">
+            
+                <select name='cuisine_choice' id='cuisine_choice' class="form-control">
                     {% if cuisine_choice == "r" %}
                         <option value="r" selected="selected">Surprise Cuisine!</option>
                     {% else %}
@@ -136,8 +145,13 @@
                     {% else %}
                         <option value="b">Breakfast for Dinner</option>
                     {% endif %}
+                    {% if cuisine_choice == "h" %}
+                        <option value="h" selected="selected">Historical Dinners</option>
+                    {% else %}
+                        <option value="h">Historical Dinners</option>
+                    {% endif %}
                 </select>
-                <select name='nutrient_choice' id='nutrient_choice' class="form-control" onchange="this.form.submit()">
+                <select name='nutrient_choice' id='nutrient_choice' class="form-control">
                     {% if nutrient_choice == "calories" %}
                         <option value="calories" selected="selected">Calories</option>
                     {% else %}
@@ -169,13 +183,52 @@
                         <option value="fiber">Fiber (g)</option>
                     {% endif %}
                 </select>
+                
+                <input class="" type="number" step="any" min="0" placeholder="Histogram Min" autocomplete="off" spellcheck="false" style="position: relative; vertical-align: top; background-color: transparent; " dir="auto" name='hist_bound_min' id='hist_bound_min' value={{hist_bound_min}}>
+                
+                <input class="" type="number" step="any" min="0" placeholder="Histogram Max" autocomplete="off" spellcheck="false" style="position: relative; vertical-align: top; background-color: transparent; " dir="auto" name='hist_bound' id='hist_bound' value={{hist_bound}}>
+                <input id='mybutton' class="btn btn-success" type='submit' value="Calculate!">
+                <label>
+                    <input type="checkbox" name='calc_top_flag' id='calc_top_flag'> Calculate top 5 foods (takes a few secs). Will also recreate pie chart using nutrient limit criteria.
+                </label>
             </form>
 	    </div>
-	        <div style="width:300px; margin:0 auto;">
+	        <div class="col-xs-1">
+	        </div>
+	        <div class="col-xs-5">
                 <div class="chart">
-                    <svg class="pie-b"></svg>
+                    <svg class="pie-b">
+                    {% if calc_top_flag %}
+                        <text x="10" y="15" font-family="sans-serif" font-size="12px" fill="black">Using dinners in cuisine that</text>
+                        <text x="10" y="27" font-family="sans-serif" font-size="12px" fill="black">fall within histogram bounds.</text>
+                    {% else %}
+                        <text x="10" y="15" font-family="sans-serif" font-size="12px" fill="black">Using all dinners in cuisine.</text>
+                    {% endif %}
+                    </svg>
                 </div>
             </div>
+            <div class="col-xs-5">
+                <div class="table-responsive">
+                    <table class="table table-striped" align="center">
+                        <thead>
+                            <tr>
+                                <th><div class="text-left">Food Description</div></th>
+                                <th><div class="text-right">Frequency in Dinners</div></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for line in top_five_foods %}
+                                <tr>
+                                    <td><div class="text-left">{{line[0]}}</div></td>
+                                    <td><div class="text-right">{{line[1]}}</div></td>
+                                </tr>
+                            {% endfor %} 
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+	        <div class="col-xs-1">
+	        </div>
         </div>
 	</div>
     
@@ -187,12 +240,12 @@
                             // A formatter for counts.
                             var formatCount = d3.format(",.0f");
 
-                            var margin = {top: 10, right: 0, bottom: 30, left: 30},
+                            var margin = {top: 10, right: 0, bottom: 80, left: 30},
                                 width = 930 - margin.left - margin.right,
                                 height = 340 - margin.top - margin.bottom;
 
                             var x = d3.scale.linear()
-                                .domain([0, {{hist_bound}}])
+                                .domain([{{hist_bound_min}}, {{hist_bound}}])
                                 .range([0, width]);
 
                             // Generate a histogram using twenty uniformly-spaced bins.
@@ -223,7 +276,8 @@
 
                             bar.append("rect")
                                 .attr("x", 1)
-                                .attr("width", x(data[0].dx) - 1)
+//                                 .attr("width", x(data[0].dx) - 1)
+                                .attr("width", width/25)
                                 .attr("font-family","sans-serif")
                                 .attr("font-size", "10")
                                 .attr("height", function(d) { return height - y(d.y); });
@@ -231,7 +285,8 @@
                             bar.append("text")
                                 .attr("dy", ".75em")
                                 .attr("y", 6)
-                                .attr("x", x(data[0].dx) / 2)
+//                                 .attr("x", x(data[0].dx) / 2)
+                                .attr("x", width/50)
                                 .attr("text-anchor", "middle")
                                 .attr("font-family","sans-serif")
                                 .attr("font-size", "10")
