@@ -4,6 +4,7 @@ from numpy import array, ma, mean
 from app import host, port, user, passwd, db
 
 def top_eight_foods(cuisine_code, nutrient, hist_bound_min, hist_bound):
+    print host, port, user, passwd, db
     if nutrient == "carbohydrates": nutrient = "carbohydrate"
     conn = pymysql.connect(host=host, port=port, user=user, passwd=passwd, db=db)
     cur = conn.cursor()
