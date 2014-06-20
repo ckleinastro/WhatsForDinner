@@ -1,6 +1,5 @@
 from flask import render_template, request
 from app import app, host, port, user, passwd, db
-from app.helpers.database import con_db
 from app.recommend_dinner import recommend_dinner, historical_dinner_match, generated_dinner_match
 from app.top_foods import top_eight_foods
 
@@ -10,9 +9,6 @@ from gensim.models import word2vec as gword2vec
 from numpy import array, loadtxt, histogram
 import pickle
 
-# To create a database connection, add the following
-# within your view functions:
-# con = con_db(host, port, user, passwd, db)
 
 
 
