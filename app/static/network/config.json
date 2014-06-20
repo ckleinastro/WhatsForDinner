@@ -10,7 +10,7 @@
   "text": {
     "title": "Dinner Cuisine Network Map",
     "more": "",
-    "intro": "Network map of foods using terms extracting from the USDA food nutrition database and 10 years of real American dinners survey data (30,000+ meals). Survey data is What We Eat In America, collated data releases from 2000-2010. The clusters were learned on the descriptions of the dinner food items using word2vec. word2vec is a machine learning program that uses the continuous Skip-gram model and neural networks to create feature vectors for words that describe their relative relationships.\t"
+    "intro": "Network map of foods using terms extracted from the USDA food nutrition database and 10 years of real American dinners from What We Eat In America survey data (30,000+ meals). The clusters were learned on the descriptions of the dinner food items and their associations in the survey data using the Google-developed word2vec. word2vec is a machine learning program that employs the continuous Skip-gram model and neural networks to create feature vectors for words that describe their relative relationships.\t"
   },
   "legend": {
     "edgeLabel": "Common Pairing",

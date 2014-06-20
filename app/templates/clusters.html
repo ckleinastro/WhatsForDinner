@@ -7,6 +7,18 @@
 {% block head %}
 
 <head>
+
+    <style>
+        .jumbotron-special{
+            width:100%;
+
+            padding:0px;
+            margin:0px;
+            opacity: 0.7;
+            text-align: center;
+        }
+    </style>
+
     <style>
         .center {
             margin-left: auto;
@@ -96,139 +108,137 @@
 
 
 <body>
-	<div class="container-fluid">
-        <div class="center">
-            <h4><li>Select a cuisine type to calculate a pie chart breakdown of average dinner calorie sources for dinners generated from that cuisine cluster.</li></h4>
-            <h4><li>Select a nutrient category to calculate a histogram of average dinner content for that nutrient (and within the selected cuisine cluster).</li></h4>
-        </div>
-	    <div class="center">
-            <form id='myform' method='POST' action='' role="form" class="form-inline">
-            
-                <select name='cuisine_choice' id='cuisine_choice' class="form-control">
-                    {% if cuisine_choice == "r" %}
-                        <option value="r" selected="selected">Surprise Cuisine!</option>
-                    {% else %}
-                        <option value="r">Surprise Cuisine!</option>
-                    {% endif %}
-                    {% if cuisine_choice == "c" %}
-                        <option value="c" selected="selected">Classic American</option>
-                    {% else %}
-                        <option value="c">Classic American</option>
-                    {% endif %}
-                    {% if cuisine_choice == "as" %}
-                        <option value="as" selected="selected">American Southern</option>
-                    {% else %}
-                        <option value="as">American Southern</option>
-                    {% endif %}
-                    {% if cuisine_choice == "i" %}
-                        <option value="i" selected="selected">Italian + Salad</option>
-                    {% else %}
-                        <option value="i">Italian + Salad</option>
-                    {% endif %}
-                    {% if cuisine_choice == "a" %}
-                        <option value="a" selected="selected">Asian</option>
-                    {% else %}
-                        <option value="a">Asian</option>
-                    {% endif %}
-                    {% if cuisine_choice == "m" %}
-                        <option value="m" selected="selected">Mexican</option>
-                    {% else %}
-                        <option value="m">Mexican</option>
-                    {% endif %}
-                    {% if cuisine_choice == "s" %}
-                        <option value="s" selected="selected">Seafood</option>
-                    {% else %}
-                        <option value="s">Seafood</option>
-                    {% endif %}
-                    {% if cuisine_choice == "b" %}
-                        <option value="b" selected="selected">Breakfast for Dinner</option>
-                    {% else %}
-                        <option value="b">Breakfast for Dinner</option>
-                    {% endif %}
-                    {% if cuisine_choice == "h" %}
-                        <option value="h" selected="selected">Historical Dinners</option>
-                    {% else %}
-                        <option value="h">Historical Dinners</option>
-                    {% endif %}
-                </select>
-                <select name='nutrient_choice' id='nutrient_choice' class="form-control">
-                    {% if nutrient_choice == "calories" %}
-                        <option value="calories" selected="selected">Calories</option>
-                    {% else %}
-                        <option value="calories">Calories</option>
-                    {% endif %}
-                    {% if nutrient_choice == "carbohydrates" %}
-                        <option value="carbohydrates" selected="selected">Carbs (g)</option>
-                    {% else %}
-                        <option value="carbohydrates">Carbs (g)</option>
-                    {% endif %}
-                    {% if nutrient_choice == "fat" %}
-                        <option value="fat" selected="selected">Fat (g)</option>
-                    {% else %}
-                        <option value="fat">Fat (g)</option>
-                    {% endif %}
-                    {% if nutrient_choice == "protein" %}
-                        <option value="protein" selected="selected">Protein (g)</option>
-                    {% else %}
-                        <option value="protein">Protein (g)</option>
-                    {% endif %}
-                    {% if nutrient_choice == "sugar" %}
-                        <option value="sugar" selected="selected">Sugar (g)</option>
-                    {% else %}
-                        <option value="sugar">Sugar (g)</option>
-                    {% endif %}
-                    {% if nutrient_choice == "fiber" %}
-                        <option value="fiber" selected="selected">Fiber (g)</option>
-                    {% else %}
-                        <option value="fiber">Fiber (g)</option>
-                    {% endif %}
-                </select>
+	<div class="jumbotron jumbotron-special">
+	    <div class="container-fluid">
+                <h3>Explore the distributions of generated cuisines and the historical dinner data.</h3>
+            <div class="">
+                <form id='myform' method='POST' action='' role="form" class="form-inline form-small">
+                    <select name='cuisine_choice' id='cuisine_choice' class="form-control">
+                        {% if cuisine_choice == "r" %}
+                            <option value="r" selected="selected">Surprise Cuisine!</option>
+                        {% else %}
+                            <option value="r">Surprise Cuisine!</option>
+                        {% endif %}
+                        {% if cuisine_choice == "c" %}
+                            <option value="c" selected="selected">Classic American</option>
+                        {% else %}
+                            <option value="c">Classic American</option>
+                        {% endif %}
+                        {% if cuisine_choice == "as" %}
+                            <option value="as" selected="selected">American Southern</option>
+                        {% else %}
+                            <option value="as">American Southern</option>
+                        {% endif %}
+                        {% if cuisine_choice == "i" %}
+                            <option value="i" selected="selected">Italian + Salad</option>
+                        {% else %}
+                            <option value="i">Italian + Salad</option>
+                        {% endif %}
+                        {% if cuisine_choice == "a" %}
+                            <option value="a" selected="selected">Asian</option>
+                        {% else %}
+                            <option value="a">Asian</option>
+                        {% endif %}
+                        {% if cuisine_choice == "m" %}
+                            <option value="m" selected="selected">Mexican</option>
+                        {% else %}
+                            <option value="m">Mexican</option>
+                        {% endif %}
+                        {% if cuisine_choice == "s" %}
+                            <option value="s" selected="selected">Seafood</option>
+                        {% else %}
+                            <option value="s">Seafood</option>
+                        {% endif %}
+                        {% if cuisine_choice == "b" %}
+                            <option value="b" selected="selected">Breakfast for Dinner</option>
+                        {% else %}
+                            <option value="b">Breakfast for Dinner</option>
+                        {% endif %}
+                        {% if cuisine_choice == "h" %}
+                            <option value="h" selected="selected">Historical Dinners</option>
+                        {% else %}
+                            <option value="h">Historical Dinners</option>
+                        {% endif %}
+                    </select>
+                    <select name='nutrient_choice' id='nutrient_choice' class="form-control">
+                        {% if nutrient_choice == "calories" %}
+                            <option value="calories" selected="selected">Calories</option>
+                        {% else %}
+                            <option value="calories">Calories</option>
+                        {% endif %}
+                        {% if nutrient_choice == "carbohydrates" %}
+                            <option value="carbohydrates" selected="selected">Carbs (g)</option>
+                        {% else %}
+                            <option value="carbohydrates">Carbs (g)</option>
+                        {% endif %}
+                        {% if nutrient_choice == "fat" %}
+                            <option value="fat" selected="selected">Fat (g)</option>
+                        {% else %}
+                            <option value="fat">Fat (g)</option>
+                        {% endif %}
+                        {% if nutrient_choice == "protein" %}
+                            <option value="protein" selected="selected">Protein (g)</option>
+                        {% else %}
+                            <option value="protein">Protein (g)</option>
+                        {% endif %}
+                        {% if nutrient_choice == "sugar" %}
+                            <option value="sugar" selected="selected">Sugar (g)</option>
+                        {% else %}
+                            <option value="sugar">Sugar (g)</option>
+                        {% endif %}
+                        {% if nutrient_choice == "fiber" %}
+                            <option value="fiber" selected="selected">Fiber (g)</option>
+                        {% else %}
+                            <option value="fiber">Fiber (g)</option>
+                        {% endif %}
+                    </select>
                 
-                <input class="" type="number" step="any" min="0" placeholder="Histogram Min" autocomplete="off" spellcheck="false" style="position: relative; vertical-align: top; background-color: transparent; " dir="auto" name='hist_bound_min' id='hist_bound_min' value={{hist_bound_min}}>
+                    <input class="" type="number" step="any" min="0" placeholder="Histogram Min" autocomplete="off" spellcheck="false" style="position: relative; vertical-align: top; background-color: transparent; " dir="auto" name='hist_bound_min' id='hist_bound_min' value={{hist_bound_min}}>
                 
-                <input class="" type="number" step="any" min="0" placeholder="Histogram Max" autocomplete="off" spellcheck="false" style="position: relative; vertical-align: top; background-color: transparent; " dir="auto" name='hist_bound' id='hist_bound' value={{hist_bound}}>
-                <input id='mybutton' class="btn btn-success" type='submit' value="Calculate!">
-                <label>
-                    <input type="checkbox" name='calc_top_flag' id='calc_top_flag'> Calculate top 5 foods (takes a few secs). Will also recreate pie chart using nutrient limit criteria.
-                </label>
-            </form>
-	    </div>
-	        <div class="col-xs-1">
-	        </div>
-	        <div class="col-xs-5">
-                <div class="chart">
-                    <svg class="pie-b">
-                    {% if calc_top_flag %}
-                        <text x="10" y="15" font-family="sans-serif" font-size="12px" fill="black">Using dinners in cuisine that</text>
-                        <text x="10" y="27" font-family="sans-serif" font-size="12px" fill="black">fall within histogram bounds.</text>
-                    {% else %}
-                        <text x="10" y="15" font-family="sans-serif" font-size="12px" fill="black">Using all dinners in cuisine.</text>
-                    {% endif %}
-                    </svg>
-                </div>
+                    <input class="" type="number" step="any" min="0" placeholder="Histogram Max" autocomplete="off" spellcheck="false" style="position: relative; vertical-align: top; background-color: transparent; " dir="auto" name='hist_bound' id='hist_bound' value={{hist_bound}}>
+                    <input id='mybutton' class="btn btn-success" type='submit' value="Calculate!">
+                    <label>
+                        <input type="checkbox" name='calc_top_flag' id='calc_top_flag'> Calculate top 5 foods (takes a few secs). Will also recreate pie chart using nutrient limit criteria.
+                    </label>
+                </form>
             </div>
-            <div class="col-xs-5">
-                <div class="table-responsive">
-                    <table class="table table-striped" align="center">
-                        <thead>
-                            <tr>
-                                <th><div class="text-left">Food Description</div></th>
-                                <th><div class="text-right">Frequency in Dinners</div></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for line in top_five_foods %}
+                <div class="col-xs-1">
+                </div>
+                <div class="col-xs-5">
+                    <div class="chart">
+                        <svg class="pie-b">
+                        {% if calc_top_flag %}
+                            <text x="10" y="15" font-family="sans-serif" font-size="12px" fill="black">Using dinners in cuisine that</text>
+                            <text x="10" y="27" font-family="sans-serif" font-size="12px" fill="black">fall within histogram bounds.</text>
+                        {% else %}
+                            <text x="10" y="15" font-family="sans-serif" font-size="12px" fill="black">Using all dinners in cuisine.</text>
+                        {% endif %}
+                        </svg>
+                    </div>
+                </div>
+                <div class="col-xs-5">
+                    <div class="table-responsive">
+                        <table class="table table-condensed" align="center">
+                            <thead>
                                 <tr>
-                                    <td><div class="text-left">{{line[0]}}</div></td>
-                                    <td><div class="text-right">{{line[1]}}</div></td>
+                                    <th><div class="text-left">Food Description</div></th>
+                                    <th><div class="text-right">Frequency in Dinners</div></th>
                                 </tr>
-                            {% endfor %} 
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                {% for line in top_five_foods %}
+                                    <tr>
+                                        <td><div class="text-left">{{line[0]}}</div></td>
+                                        <td><div class="text-right">{{line[1]}}</div></td>
+                                    </tr>
+                                {% endfor %} 
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-xs-1">
                 </div>
             </div>
-	        <div class="col-xs-1">
-	        </div>
         </div>
 	</div>
     

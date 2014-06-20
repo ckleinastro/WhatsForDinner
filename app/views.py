@@ -31,6 +31,9 @@ def index():
         nutrition_data[0] = consumed_calories
     except:
         consumed_calories = "Calories"
+    
+    
+        
         
     create_dinners_flag = True
     if type(consumed_calories) == str:
@@ -38,7 +41,12 @@ def index():
         error_text = "Consumed calories required."
         return render_template('index.html', create_dinners_flag=create_dinners_flag,
             consumed_calories=consumed_calories, error_text=error_text)
-            
+    if consumed_calories < 0:
+        create_dinners_flag = False
+        error_text = "Consumed calories must be 0 or larger."
+        return render_template('index.html', create_dinners_flag=create_dinners_flag,
+            consumed_calories=consumed_calories, error_text=error_text)
+    
     # auto-fill carbohydrate
     nutrition_data[1] = consumed_calories*0.1225
     # auto-fill fat

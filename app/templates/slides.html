@@ -1,36 +1,28 @@
 {% extends "layout/base.html" %}
 
+{% block head %}
+
+{% endblock %}
+
 {% block content %}
     <div id="wrap">
-        <div class="container">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-1">
+                <div class="col-lg-1">
+                </div>
+                <div class="col-lg-10">
+                    <div style="width:100%; margin: 0 auto;">
+                        <iframe src="http://www.slideshare.net/slideshow/embed_code/36092541" width="569" height="300" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px 1px 0; margin-bottom:5px; max-width: 200%;" allowfullscreen> </iframe>
                     </div>
-                    <div class="col-md-10">
-                    <img src="{{ url_for('static', filename='cklein_pic_small.jpg') }}"
-                         class="img-responsive" height="300px" width="300px"/>
-                    </div>
-                    <div class="col-md-1">
+                    <div style="width:100%; margin: 0 auto;">
+                        <iframe src="http://www.slideshare.net/slideshow/embed_code/36093863" width="569" height="300" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px 1px 0; margin-bottom:5px; max-width: 133.333%;" allowfullscreen> </iframe> <div style="margin-bottom:5px"> <strong> <a href="https://www.slideshare.net/ckleinastro/whats-for-dinner-widescreen-version" title="What&#x27;s For Dinner - Meal recommender to meet nutrition goals" target="_blank">What&#x27;s For Dinner - Meal recommender to meet nutrition goals</a> </strong> from <strong><a href="http://www.slideshare.net/ckleinastro" target="_blank">Christopher Klein</a></strong>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-1">
-                    </div>
-                    <div class="col-md-10">
-                    <h1 class="text-justify text-muted">Christopher Klein</h1>
-                    <p class="lead">I finished up my PhD in Astrophysics at UC Berkeley this past May. I was studying RR Lyrae pulsating variable stars to precisely calibrate their period-magnitude relations and then use these stars to map the Milky Way and our neighboring galaxies. You can grab my dissertation (PDF, 58 MB) <a href="http://astro.berkeley.edu/~cklein/dissertation.pdf">here</a>.</p>
-                    <p class="lead">I'm now a fellow at <a href="http://www.insightdatascience.com">Insight Data Science</a>. I'm very excited to be pivoting from academic research into a Data Science career where I can apply my data analysis, statistics, programming, machine learning, and hacking skills to make an impact solving real-world problems.</p>
-                    </div>
-                    <div class="col-md-1">
-                    </div>
+                <div class="col-lg-1">
                 </div>
-            </div>
-        </div>
     </div>
-
+    
 {% endblock %}
 
 {% block footer %}
     {% include "include/footer.html" %}
 {% endblock %}
+

@@ -154,6 +154,11 @@
                         {% else %}
                             <option value="b">Breakfast for Dinner</option>
                         {% endif %}
+                        {% if cuisine_choice == "h" %}
+                            <option value="h" selected="selected">Historical Dinners</option>
+                        {% else %}
+                            <option value="h">Historical Dinners</option>
+                        {% endif %}
                     </select>
                      <input id='mybutton' class="btn btn-success" type='submit' value="What's for Dinner?"> <img src="{{ url_for('static', filename='WFD_logo_very_small.png') }}" />
                 </p>

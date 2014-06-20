@@ -78,7 +78,7 @@ function initSigma(config) {
 	else
 		mouseProps={
         minRatio: 0.75, // How far can we zoom out?
-        maxRatio: 20, // How far can we zoom in?
+        maxRatio: 10, // How far can we zoom in?
     	};
 	
     var a = sigma.init(document.getElementById("sigma-canvas")).drawingProperties(drawProps).graphProperties(graphProps).mouseProperties(mouseProps);
@@ -140,12 +140,12 @@ function setupGUI(config) {
 	$("#titletext").html(config.text.intro);
 
 	// More information
-	if (config.text.more) {
-		$("#information").html(config.text.more);
-	} else {
-		//hide more information link
-		$("#moreinformation").hide();
-	}
+// 	if (config.text.more) {
+// 		$("#information").html(config.text.more);
+// 	} else {
+// 		//hide more information link
+// 		$("#moreinformation").hide();
+// 	}
 
 	// Legend
 
@@ -572,7 +572,7 @@ function nodeActive(a) {
 
         if (image_attribute) {
         	//image_index = jQuery.inArray(image_attribute, temp_array);
-        	$GP.info_name.html("<div><img src=" + f.attributes[image_attribute] + " style=\"vertical-align:middle\" /> <span onmouseover=\"sigInst._core.plotter.drawHoverNode(sigInst._core.graph.nodesIndex['" + b.id + '\'])" onmouseout="sigInst.refresh()">' + b.label + "</span></div>");
+        	$GP.info_name.html("<div><img src=\"static/WFD_logo_very_small.png\" style=\"vertical-align:middle;width: 20px;\" /> <span onmouseover=\"sigInst._core.plotter.drawHoverNode(sigInst._core.graph.nodesIndex['" + b.id + '\'])" onmouseout="sigInst.refresh()">' + b.label + "</span></div>");
         } else {
         	$GP.info_name.html("<div><span onmouseover=\"sigInst._core.plotter.drawHoverNode(sigInst._core.graph.nodesIndex['" + b.id + '\'])" onmouseout="sigInst.refresh()">' + b.label + "</span></div>");
         }

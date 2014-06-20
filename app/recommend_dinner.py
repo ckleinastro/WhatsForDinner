@@ -196,22 +196,44 @@ def generated_dinner_match(dinner_nutrition_target, daily_nutrition_goal, cuisin
     counter = 0.5
     while counter < 1.0:
         cutting_limits = [1-counter, 1+counter]
-        cur.execute("""
-        SELECT  calories, carbohydrate, fat, protein, sugar, fiber,
-                dinner_desc, portion_masses
-        FROM %s_generated_dinners
-        WHERE   ((calories > %f) AND (calories < %f)) AND
-                ((carbohydrate > %f) AND (carbohydrate < %f)) AND
-                ((fat > %f) AND (fat < %f)) AND
-                ((protein > %f) AND (protein < %f)) AND
-                ((sugar > %f) AND (sugar < %f)) AND
-                ((fiber > %f) AND (fiber < %f));""" % (cuisine_code,
-                dinner_nutrition_target[0]*cutting_limits[0], dinner_nutrition_target[0]*cutting_limits[1],
-                dinner_nutrition_target[1]*cutting_limits[0], dinner_nutrition_target[1]*cutting_limits[1],
-                dinner_nutrition_target[2]*cutting_limits[0], dinner_nutrition_target[2]*cutting_limits[1],
-                dinner_nutrition_target[3]*cutting_limits[0], dinner_nutrition_target[3]*cutting_limits[1],
-                dinner_nutrition_target[4]*cutting_limits[0], dinner_nutrition_target[4]*cutting_limits[1],
-                dinner_nutrition_target[5]*cutting_limits[0], dinner_nutrition_target[5]*cutting_limits[1]))
+        if cuisine_code == "h":
+            cur.execute("""
+            SELECT  calories, carbohydrate, fat, protein, sugar, fiber,
+                    dinner_desc, portion_masses
+            FROM historical_dinners
+            WHERE   ((calories > %f) AND (calories < %f)) AND
+                    ((carbohydrate > %f) AND (carbohydrate < %f)) AND
+                    ((fat > %f) AND (fat < %f)) AND
+                    ((protein > %f) AND (protein < %f)) AND
+                    ((sugar > %f) AND (sugar < %f)) AND
+                    ((fiber > %f) AND (fiber < %f));""" % (
+                    dinner_nutrition_target[0]*cutting_limits[0], dinner_nutrition_target[0]*cutting_limits[1],
+                    dinner_nutrition_target[1]*cutting_limits[0], dinner_nutrition_target[1]*cutting_limits[1],
+                    dinner_nutrition_target[2]*cutting_limits[0], dinner_nutrition_target[2]*cutting_limits[1],
+                    dinner_nutrition_target[3]*cutting_limits[0], dinner_nutrition_target[3]*cutting_limits[1],
+                    dinner_nutrition_target[4]*cutting_limits[0], dinner_nutrition_target[4]*cutting_limits[1],
+                    dinner_nutrition_target[5]*cutting_limits[0], dinner_nutrition_target[5]*cutting_limits[1]))
+        else:
+            cur.execute("""
+            SELECT  calories, carbohydrate, fat, protein, sugar, fiber,
+                    dinner_desc, portion_masses
+            FROM %s_generated_dinners
+            WHERE   ((calories > %f) AND (calories < %f)) AND
+                    ((carbohydrate > %f) AND (carbohydrate < %f)) AND
+                    ((fat > %f) AND (fat < %f)) AND
+                    ((protein > %f) AND (protein < %f)) AND
+                    ((sugar > %f) AND (sugar < %f)) AND
+                    ((fiber > %f) AND (fiber < %f));""" % (cuisine_code,
+                    dinner_nutrition_target[0]*cutting_limits[0], dinner_nutrition_target[0]*cutting_limits[1],
+                    dinner_nutrition_target[1]*cutting_limits[0], dinner_nutrition_target[1]*cutting_limits[1],
+                    dinner_nutrition_target[2]*cutting_limits[0], dinner_nutrition_target[2]*cutting_limits[1],
+                    dinner_nutrition_target[3]*cutting_limits[0], dinner_nutrition_target[3]*cutting_limits[1],
+                    dinner_nutrition_target[4]*cutting_limits[0], dinner_nutrition_target[4]*cutting_limits[1],
+                    dinner_nutrition_target[5]*cutting_limits[0], dinner_nutrition_target[5]*cutting_limits[1]))
+
+        
+        
+        
         returned_data = cur.fetchall()
         if len(returned_data) > 10:
             break
@@ -268,6 +290,13 @@ def generated_dinner_match(dinner_nutrition_target, daily_nutrition_goal, cuisin
         best_dinner_fat, best_dinner_protein, best_dinner_sugar, best_dinner_fiber)
     best_dinner_desc_list = returned_data[best_dinner_index][6].split("|")
     best_dinner_portion_list = returned_data[best_dinner_index][7].split("|")
+    if cuisine_code != "h":
+        simplified_best_dinner_portion_list = []
+        for portion_desc in best_dinner_portion_list:
+            simplified_best_dinner_portion_list.append(portion_desc.split("x ")[1])
+        best_dinner_portion_list = simplified_best_dinner_portion_list
+        
+        
     best_dinner_score = dinner_scores[best_dinner_index]
     best_dinner_simple_score = simple_dinner_scores[best_dinner_index]
     
