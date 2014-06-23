@@ -72,7 +72,7 @@
 <style>
     .jumbotron-special-dinner-nutrition{
         width:100%;
-        height: 182px;
+        height: 212px;
         background-color:#FFEBCC;
         padding:0px;
         margin:0px;
@@ -181,7 +181,7 @@
                 <div class="col-xs-1">
                 </div>
                 <div class="col-xs-10">
-                    <h2 class="sub-header">Dinner nutrition target</h2>
+                    <h3 class="sub-header">Dinner nutrition target</h3>
                     <div class="table-responsive">
                         <table class="table table-striped" align="center">
                             <thead>
@@ -243,57 +243,51 @@
     </body>
 
 
-
-
-
-
-    <body style="">
-        <div class="container-fluid">
-            <div class="jumbotron jumbotron-special-dinner-nutrition">
-            <div class="col-xs-1">
-            </div>
-                <div class="col-xs-10">
-                    <h2 class="sub-header">Dinner nutrition, match = 
-                    {% if int_dinner_simple_score==0 %}
-                        <font color="9B8772">0</font>
-                    {% else %}
-                        {% for n in range(int_dinner_simple_score) %}
-                            <img src="{{ url_for('static', filename='beef_40px.png') }}" />
-                        {% endfor %}
-                        {% if half_score_flag %}
-                            <img src="{{ url_for('static', filename='beef_half_40px.png') }}" />
-                        {% endif %}
-                    {% endif %}
-                    <font color="9B8772">/ 5</font>
-                    </h2>
-                    <div class="table-responsive">
-                        <table class="table table-striped" align="center">
-                            <thead>
-                                <tr>
-                                    <th><div class="text-center">Calories</div></th>
-                                    <th><div class="text-center">Carbs (g)</div></th>
-                                    <th><div class="text-center">Fat (g)</div></th>
-                                    <th><div class="text-center">Protein (g)</div></th>
-                                    <th><div class="text-center">Sugar (g)</div></th>
-                                    <th><div class="text-center">Fiber (g)</div></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <td><font color="{{dinner_colors[0]}}">{{dinner_nutrition_data[0]}}</font></td>
-                                <td><font color="{{dinner_colors[1]}}">{{dinner_nutrition_data[1]}}</font></td>
-                                <td><font color="{{dinner_colors[2]}}">{{dinner_nutrition_data[2]}}</font></td>
-                                <td><font color="{{dinner_colors[3]}}">{{dinner_nutrition_data[3]}}</font></td>
-                                <td><font color="{{dinner_colors[4]}}">{{dinner_nutrition_data[4]}}</font></td>
-                                <td><font color="{{dinner_colors[5]}}">{{dinner_nutrition_data[5]}}</font></td>
-                            </tbody>
-                        </table>
-                  </div>
-                </div>
-            <div class="col-xs-1">
-            </div>
-            </div>
+    <div class="container-fluid">
+        <div class="jumbotron jumbotron-special-dinner-nutrition">
+        <div class="col-xs-1">
         </div>
-    </body>
+            <div class="col-xs-10">
+                <h3 class="sub-header">Dinner nutrition, match = 
+                {% if int_dinner_simple_score==0 %}
+                    <font color="9B8772">0</font>
+                {% else %}
+                    {% for n in range(int_dinner_simple_score) %}
+                        <img src="{{ url_for('static', filename='beef_24px.png') }}" />
+                    {% endfor %}
+                    {% if half_score_flag %}
+                        <img src="{{ url_for('static', filename='beef_half_24px.png') }}" />
+                    {% endif %}
+                {% endif %}
+                <font color="9B8772">/ 5</font>
+                </h3>
+                <div class="table-responsive">
+                    <table class="table table-striped" align="center">
+                        <thead>
+                            <tr>
+                                <th><div class="text-center">Calories</div></th>
+                                <th><div class="text-center">Carbs (g)</div></th>
+                                <th><div class="text-center">Fat (g)</div></th>
+                                <th><div class="text-center">Protein (g)</div></th>
+                                <th><div class="text-center">Sugar (g)</div></th>
+                                <th><div class="text-center">Fiber (g)</div></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <td><font color="{{dinner_colors[0]}}">{{dinner_nutrition_data[0]}}</font></td>
+                            <td><font color="{{dinner_colors[1]}}">{{dinner_nutrition_data[1]}}</font></td>
+                            <td><font color="{{dinner_colors[2]}}">{{dinner_nutrition_data[2]}}</font></td>
+                            <td><font color="{{dinner_colors[3]}}">{{dinner_nutrition_data[3]}}</font></td>
+                            <td><font color="{{dinner_colors[4]}}">{{dinner_nutrition_data[4]}}</font></td>
+                            <td><font color="{{dinner_colors[5]}}">{{dinner_nutrition_data[5]}}</font></td>
+                        </tbody>
+                    </table>
+              </div>
+            </div>
+        <div class="col-xs-1">
+        </div>
+        </div>
+    </div>
 
 {% else %}
 

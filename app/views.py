@@ -105,10 +105,12 @@ def index():
         half_score_flag = False
         
     int_dinner_simple_score = int(dinner_simple_score)
-
+    
+    dinner_nutrition_target = ["%.1f"%b for b in dinner_nutrition_target]
+    print dinner_nutrition_target
+    
     return render_template('index.html', create_dinners_flag=create_dinners_flag,
         consumed_calories=consumed_calories, 
-        goal_nutrition_data=goal_nutrition_data,
         cuisine_choice=cuisine_choice,
         dinner_nutrition_target=dinner_nutrition_target,
         score=score_str, 
