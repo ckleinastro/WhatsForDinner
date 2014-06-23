@@ -107,8 +107,7 @@ def index():
     int_dinner_simple_score = int(dinner_simple_score)
     
     dinner_nutrition_target = ["%.1f"%b for b in dinner_nutrition_target]
-    print dinner_nutrition_target
-    
+        
     return render_template('index.html', create_dinners_flag=create_dinners_flag,
         consumed_calories=consumed_calories, 
         cuisine_choice=cuisine_choice,
@@ -309,6 +308,8 @@ def advanced():
         dinner_simple_score=5
     if hist_dinner_simple_score > 5:
         hist_dinner_simple_score=5
+    
+    dinner_nutrition_target = ["%.1f"%b for b in dinner_nutrition_target]
     
     return render_template('advanced.html', create_dinners_flag=create_dinners_flag,
         nutrition_data=nutrition_data, 
