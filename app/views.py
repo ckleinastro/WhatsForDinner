@@ -475,9 +475,8 @@ def contact():
 
 @app.route('/network')
 def show_cluster_network():
-    # Renders author.html.
+    # Renders network.html.
     return render_template('network.html')
-
 
 @app.errorhandler(404)
 def page_not_found(error):
