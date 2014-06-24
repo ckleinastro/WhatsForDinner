@@ -25,10 +25,10 @@
 <style>
     .jumbotron-special{
         width:100%;
-
-        padding:0px;
+        height: 400px;
+        padding:40px;
         margin:0px;
-        opacity: 0.7;
+        opacity: 1;
         text-align: center;
     }
 </style>
@@ -40,7 +40,7 @@
         background-color:#B2CCFF;
         padding:0px;
         margin:0px;
-        opacity: 0.7;
+        opacity: 1;
         text-align: center;
     }
 </style>
@@ -52,9 +52,49 @@
         background-color:#FFEBCC;
         padding:0px;
         margin:0px;
-        opacity: 0.7;
+        opacity: 1;
         text-align: center;
     }
+</style>
+
+<style>
+.btn-custom {
+  background-color: hsl(280, 100%, 72%) !important;
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#f8eaff", endColorstr="#cf70ff");
+  background-image: -khtml-gradient(linear, left top, left bottom, from(#f8eaff), to(#cf70ff));
+  background-image: -moz-linear-gradient(top, #f8eaff, #cf70ff);
+  background-image: -ms-linear-gradient(top, #f8eaff, #cf70ff);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f8eaff), color-stop(100%, #cf70ff));
+  background-image: -webkit-linear-gradient(top, #f8eaff, #cf70ff);
+  background-image: -o-linear-gradient(top, #f8eaff, #cf70ff);
+  background-image: linear-gradient(#f8eaff, #cf70ff);
+  border-color: #cf70ff #cf70ff hsl(280, 100%, 66%);
+  color: #333 !important;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.39);
+  -webkit-font-smoothing: antialiased;
+}
+</style>
+
+<style>
+.input-group-addon-calories {
+	background-color: #FBEFEF;
+}
+.input-group-addon-carbs {
+	background-color: #FBFBEF;
+}
+.input-group-addon-fat {
+	background-color: #EFFBEF;
+}
+.input-group-addon-protein {
+	background-color: #EFFBFB;
+}
+.input-group-addon-sugar {
+	background-color: #EFEFFB;
+}
+.input-group-addon-fiber {
+	background-color: #FBEFFB;
+}
 </style>
 
 {% endblock %}
@@ -65,24 +105,190 @@
 <body style="">
     <div class="container-fluid">
         <div class="jumbotron jumbotron-special">
-            <p class="bottom-three">What's for Dinner</p>
             <form id='myform' method='POST' action='' role="form" class="form-inline form-small">
+
+                <div class="row">
+                    <div class="col-xs-4">
+                        <h3></h3>
+                    </div>
+                    <div class="col-xs-4">
+                        <h3 style="text-align:center">What have you eaten today?</h3>
+                    </div>
+                    <div class="col-xs-4">
+                        <h3></h3>
+                    </div>
+                </div>
+    
+                <div class="row">
+                    <div class="col-xs-4">
+                        <div class="input-group">
+                            <span class="input-group-addon input-group-addon-calories"><span>Calories</span></span>
+                            <input type="text" class="form-control" placeholder="Calories" name='consumed_calories' id='consumed_calories' value={{nutrition_data[0]}}>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="input-group">
+                            <span class="input-group-addon input-group-addon-carbs"><span>Carbs</span></span>
+                            <input type="text" class="form-control" placeholder="Carbs" name='consumed_carbohydrates' id='consumed_carbohydrates' value={{nutrition_data[1]}}>
+                            <span class="input-group-addon input-group-addon-carbs">g</span>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="input-group">
+                            <span class="input-group-addon input-group-addon-fat"><span>Fat</span></span>
+                            <input type="text" class="form-control" placeholder="Fat" name='consumed_fat' id='consumed_fat' value={{nutrition_data[2]}}>
+                            <span class="input-group-addon input-group-addon-fat">g</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <div class="input-group">
+                            <span class="input-group-addon input-group-addon-protein"><span>Protein</span></span>
+                            <input type="text" class="form-control" placeholder="Protein" name='consumed_protein' id='consumed_protein' value={{nutrition_data[3]}}>
+                            <span class="input-group-addon input-group-addon-protein">g</span>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="input-group">
+                            <span class="input-group-addon input-group-addon-sugar"><span>Sugar</span></span>
+                            <input type="text" class="form-control" placeholder="Sugar" name='consumed_sugar' id='consumed_sugar' value={{nutrition_data[4]}}>
+                            <span class="input-group-addon input-group-addon-sugar">g</span>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="input-group">
+                            <span class="input-group-addon input-group-addon-fiber"><span>Fiber</span></span>
+                            <input type="text" class="form-control" placeholder="Fiber" name='consumed_fiber' id='consumed_fiber' value={{nutrition_data[5]}}>
+                            <span class="input-group-addon input-group-addon-fiber">g</span>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="row">
+                    <div class="col-xs-4">
+                        <h3></h3>
+                    </div>
+                    <div class="col-xs-4">
+                        <h3 style="text-align:center">What's your daily goal?</h3>
+                    </div>
+                    <div class="col-xs-4">
+                        <h3></h3>
+                    </div>
+                </div>
+    
+                <div class="row">
+                    <div class="col-xs-4">
+                        <div class="input-group">
+                            <span class="input-group-addon input-group-addon-calories"><span>Calories</span></span>
+                            <input type="text" class="form-control" placeholder="Calories" name='goal_calories' id='goal_calories' value={{goal_nutrition_data[0]}}>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="input-group">
+                            <span class="input-group-addon input-group-addon-carbs"><span>Carbs</span></span>
+                            <input type="text" class="form-control" placeholder="Carbs" name='goal_carbohydrates' id='goal_carbohydrates' value={{goal_nutrition_data[1]}}>
+                            <span class="input-group-addon input-group-addon-carbs">g</span>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="input-group">
+                            <span class="input-group-addon input-group-addon-fat"><span>Fat</span></span>
+                            <input type="text" class="form-control" placeholder="Fat" name='goal_fat' id='goal_fat' value={{goal_nutrition_data[2]}}>
+                            <span class="input-group-addon input-group-addon-fat">g</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <div class="input-group">
+                            <span class="input-group-addon input-group-addon-protein"><span>Protein</span></span>
+                            <input type="text" class="form-control" placeholder="Protein" name='goal_protein' id='goal_protein' value={{goal_nutrition_data[3]}}>
+                            <span class="input-group-addon input-group-addon-protein">g</span>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="input-group">
+                            <span class="input-group-addon input-group-addon-sugar"><span>Sugar</span></span>
+                            <input type="text" class="form-control" placeholder="Sugar" name='goal_sugar' id='goal_sugar' value={{goal_nutrition_data[4]}}>
+                            <span class="input-group-addon input-group-addon-sugar">g</span>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="input-group">
+                            <span class="input-group-addon input-group-addon-fiber"><span>Fiber</span></span>
+                            <input type="text" class="form-control" placeholder="Fiber" name='goal_fiber' id='goal_fiber' value={{goal_nutrition_data[5]}}>
+                            <span class="input-group-addon input-group-addon-fiber">g</span>
+                        </div>
+                    </div>
+                </div>
+
+                <p></p>
+                <p>
+                    <select name='cuisine_choice' id='cuisine_choice' class="form-control">
+                        {% if cuisine_choice == "r" %}
+                            <option value="r" selected="selected">Surprise Cuisine!</option>
+                        {% else %}
+                            <option value="r">Surprise Cuisine!</option>
+                        {% endif %}
+                        {% if cuisine_choice == "c" %}
+                            <option value="c" selected="selected">Classic American</option>
+                        {% else %}
+                            <option value="c">Classic American</option>
+                        {% endif %}
+                        {% if cuisine_choice == "as" %}
+                            <option value="as" selected="selected">American Southern</option>
+                        {% else %}
+                            <option value="as">American Southern</option>
+                        {% endif %}
+                        {% if cuisine_choice == "i" %}
+                            <option value="i" selected="selected">Italian + Salad</option>
+                        {% else %}
+                            <option value="i">Italian + Salad</option>
+                        {% endif %}
+                        {% if cuisine_choice == "a" %}
+                            <option value="a" selected="selected">Asian</option>
+                        {% else %}
+                            <option value="a">Asian</option>
+                        {% endif %}
+                        {% if cuisine_choice == "m" %}
+                            <option value="m" selected="selected">Mexican</option>
+                        {% else %}
+                            <option value="m">Mexican</option>
+                        {% endif %}
+                        {% if cuisine_choice == "s" %}
+                            <option value="s" selected="selected">Seafood</option>
+                        {% else %}
+                            <option value="s">Seafood</option>
+                        {% endif %}
+                        {% if cuisine_choice == "b" %}
+                            <option value="b" selected="selected">Breakfast for Dinner</option>
+                        {% else %}
+                            <option value="b">Breakfast for Dinner</option>
+                        {% endif %}
+                    </select>
+                     <input id='mybutton' class="btn btn btn-custom" type='submit' value="What's for Dinner?" style="font-size: 22px;"> <img src="{{ url_for('static', filename='WFD_logo_very_small.png') }}" />
+                </p> 
+
+
+
+            <!-- 
                 <h2>What have you eaten today?</h2>
                     <div class='form-group'>
-                        <td><label class="control-label" for="consumed_calories">Calories</label></td>
-                        <td><label class="control-label" for="consumed_carbohydrates">Carbs (g)</label></td>
-                        <td><label class="control-label" for="consumed_fat">Fat (g)</label></td>
-                        <td><label class="control-label" for="consumed_protein">Protein (g)</label></td>
-                        <td><label class="control-label" for="consumed_sugar">Sugar (g)</label></td>
-                        <td><label class="control-label" for="consumed_fiber">Fiber (g)</label></td>
+                        <label class="control-label" for="consumed_calories">Calories</label>
+                        <label class="control-label" for="consumed_carbohydrates">Carbs (g)</label>
+                        <label class="control-label" for="consumed_fat">Fat (g)</label>
+                        <label class="control-label" for="consumed_protein">Protein (g)</label>
+                        <label class="control-label" for="consumed_sugar">Sugar (g)</label>
+                        <label class="control-label" for="consumed_fiber">Fiber (g)</label>
                     </div>
-                    <div class='form-group'>                  
-                        <input class="" type="number" step="any" min="0" placeholder="Calories" autocomplete="off" spellcheck="false" style="position: relative; vertical-align: top; background-color: transparent; " dir="auto" name='consumed_calories' id='consumed_calories' value={{nutrition_data[0]}}>
-                        <input class="" type="number" step="any" min="0" placeholder="Carbs (g)" autocomplete="off" spellcheck="false" style="position: relative; vertical-align: top; background-color: transparent; " dir="auto" name='consumed_carbohydrates' id='consumed_carbohydrates' value={{nutrition_data[1]}}>
-                        <input class="" type="number" step="any" min="0" placeholder="Fat (g)" autocomplete="off" spellcheck="false" style="position: relative; vertical-align: top; background-color: transparent; " dir="auto" name='consumed_fat' id='consumed_fat' value={{nutrition_data[2]}}>
-                        <input class="" type="number" step="any" min="0" placeholder="Protein (g)" autocomplete="off" spellcheck="false" style="position: relative; vertical-align: top; background-color: transparent; " dir="auto" name='consumed_protein' id='consumed_protein' value={{nutrition_data[3]}}>
-                        <input class="" type="number" step="any" min="0" placeholder="Sugar (g)" autocomplete="off" spellcheck="false" style="position: relative; vertical-align: top; background-color: transparent; " dir="auto" name='consumed_sugar' id='consumed_sugar' value={{nutrition_data[4]}}>
-                        <input class="" type="number" step="any" min="0" placeholder="Fiber (g)" autocomplete="off" spellcheck="false" style="position: relative; vertical-align: top; background-color: transparent; " dir="auto" name='consumed_fiber' id='consumed_fiber' value={{nutrition_data[5]}}>
+                    <div class='form-group'>
+                        <input class="form-control" type="number" step="any" min="0" placeholder="Calories" autocomplete="off" spellcheck="false" style="position: relative; vertical-align: top; background-color: #FFFFF; padding: 0px 0px;font-size: 22px;" dir="auto" name='consumed_calories' id='consumed_calories' value={{nutrition_data[0]}}>
+                        <input class="form-control" type="number" step="any" min="0" placeholder="Carbs (g)" autocomplete="off" spellcheck="false" style="position: relative; vertical-align: top; background-color: #FFFFF; padding: 0px 0px;font-size: 22px;" dir="auto" name='consumed_carbohydrates' id='consumed_carbohydrates' value={{nutrition_data[1]}}>
+                        <input class="form-control" type="number" step="any" min="0" placeholder="Fat (g)" autocomplete="off" spellcheck="false" style="position: relative; vertical-align: top; background-color: #FFFFF; padding: 0px 0px;font-size: 22px;" dir="auto" name='consumed_fat' id='consumed_fat' value={{nutrition_data[2]}}>
+                        <input class="form-control" type="number" step="any" min="0" placeholder="Protein (g)" autocomplete="off" spellcheck="false" style="position: relative; vertical-align: top; background-color: #FFFFF; padding: 0px 0px;font-size: 22px;" dir="auto" name='consumed_protein' id='consumed_protein' value={{nutrition_data[3]}}>
+                        <input class="form-control" type="number" step="any" min="0" placeholder="Sugar (g)" autocomplete="off" spellcheck="false" style="position: relative; vertical-align: top; background-color: #FFFFF; padding: 0px 0px;font-size: 22px;" dir="auto" name='consumed_sugar' id='consumed_sugar' value={{nutrition_data[4]}}>
+                        <input class="form-control" type="number" step="any" min="0" placeholder="Fiber (g)" autocomplete="off" spellcheck="false" style="position: relative; vertical-align: top; background-color: #FFFFF; padding: 0px 0px;font-size: 22px;" dir="auto" name='consumed_fiber' id='consumed_fiber' value={{nutrition_data[5]}}>
                     </div>
                 <h2>What's your daily nutrition goal?</h2>
                     <div class='form-group'>
@@ -94,12 +300,12 @@
                         <label class="control-label" for="consumed_fiber">Fiber (g)</label>
                     </div>
                     <div class='form-group'>  
-                        <input class="" type="number" step="any" min="0" placeholder="Calories [2000]" autocomplete="off" spellcheck="false" style="position: relative; vertical-align: top; background-color: transparent; " dir="auto" name='goal_calories' id='goal_calories' value={{goal_nutrition_data[0]}}>
-                        <input class="" type="number" step="any" min="0" placeholder="Carbs (g) [245]" autocomplete="off" spellcheck="false" style="position: relative; vertical-align: top; background-color: transparent; " dir="auto" name='goal_carbohydrates' id='goal_carbohydrates' value={{goal_nutrition_data[1]}}>
-                        <input class="" type="number" step="any" min="0" placeholder="Fat (g) [65]" autocomplete="off" spellcheck="false" style="position: relative; vertical-align: top; background-color: transparent; " dir="auto" name='goal_fat' id='goal_fat' value={{goal_nutrition_data[2]}}>
-                        <input class="" type="number" step="any" min="0" placeholder="Protein (g) [98]" autocomplete="off" spellcheck="false" style="position: relative; vertical-align: top; background-color: transparent; " dir="auto" name='goal_protein' id='goal_protein' value={{goal_nutrition_data[3]}}>
-                        <input class="" type="number" step="any" min="0" placeholder="Sugar (g) [74]" autocomplete="off" spellcheck="false" style="position: relative; vertical-align: top; background-color: transparent; " dir="auto" name='goal_sugar' id='goal_sugar' value={{goal_nutrition_data[4]}}>
-                        <input class="" type="number" step="any" min="0" placeholder="Fiber (g) [38]" autocomplete="off" spellcheck="false" style="position: relative; vertical-align: top; background-color: transparent; " dir="auto" name='goal_fiber' id='goal_fiber' value={{goal_nutrition_data[5]}}>
+                        <input class="form-control" type="number" step="any" min="0" placeholder="Calories [2000]" autocomplete="off" spellcheck="false" style="position: relative; vertical-align: top; background-color: #FFFFF; padding: 0px 0px;font-size: 22px;" dir="auto" name='goal_calories' id='goal_calories' value={{goal_nutrition_data[0]}}>
+                        <input class="form-control" type="number" step="any" min="0" placeholder="Carbs (g) [245]" autocomplete="off" spellcheck="false" style="position: relative; vertical-align: top; background-color: #FFFFF; padding: 0px 0px;font-size: 22px;" dir="auto" name='goal_carbohydrates' id='goal_carbohydrates' value={{goal_nutrition_data[1]}}>
+                        <input class="form-control" type="number" step="any" min="0" placeholder="Fat (g) [65]" autocomplete="off" spellcheck="false" style="position: relative; vertical-align: top; background-color: #FFFFF; padding: 0px 0px;font-size: 22px;" dir="auto" name='goal_fat' id='goal_fat' value={{goal_nutrition_data[2]}}>
+                        <input class="form-control" type="number" step="any" min="0" placeholder="Protein (g) [98]" autocomplete="off" spellcheck="false" style="position: relative; vertical-align: top; background-color: #FFFFF; padding: 0px 0px;font-size: 22px;" dir="auto" name='goal_protein' id='goal_protein' value={{goal_nutrition_data[3]}}>
+                        <input class="form-control" type="number" step="any" min="0" placeholder="Sugar (g) [74]" autocomplete="off" spellcheck="false" style="position: relative; vertical-align: top; background-color: #FFFFF; padding: 0px 0px;font-size: 22px;" dir="auto" name='goal_sugar' id='goal_sugar' value={{goal_nutrition_data[4]}}>
+                        <input class="form-control" type="number" step="any" min="0" placeholder="Fiber (g) [38]" autocomplete="off" spellcheck="false" style="position: relative; vertical-align: top; background-color: #FFFFF; padding: 0px 0px;font-size: 22px;" dir="auto" name='goal_fiber' id='goal_fiber' value={{goal_nutrition_data[5]}}>
                     </div>
                
                 <p></p>
@@ -146,9 +352,9 @@
                             <option value="b">Breakfast for Dinner</option>
                         {% endif %}
                     </select>
-                     <input id='mybutton' class="btn btn-success" type='submit' value="What's for Dinner?"> <img src="{{ url_for('static', filename='WFD_logo_very_small.png') }}" />
-                </p>
-                
+                     <input id='mybutton' class="btn btn btn-custom" type='submit' value="What's for Dinner?" style="font-size: 22px;"> <img src="{{ url_for('static', filename='WFD_logo_very_small.png') }}" />
+                </p> 
+ -->
                 
             </form>
         </div>
