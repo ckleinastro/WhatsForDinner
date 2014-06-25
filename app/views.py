@@ -74,7 +74,6 @@ def index():
     if (type(dinner_calories_goal) == str):
         create_dinners_flag = False
         error_text = ""
-        print dinner_calories_goal
         return render_template('index.html', create_dinners_flag=create_dinners_flag,
             dinner_calories_goal=dinner_calories_goal, error_text=error_text)
     
