@@ -22,52 +22,65 @@ def index():
     goal_nutrition_data = [2500, 305, 80, 120, 90, 45]
     f = request.form
 
-    try:
-        consumed_calories = float(f["consumed_calories"])
-        nutrition_data[0] = consumed_calories
-    except:
-        consumed_calories = "Consumed Calories"
-        
-    try:
-        calories_goal = float(f["calories_goal"])
-        goal_nutrition_data[0] = calories_goal
-    except:
-        calories_goal = "Calorie Goal"
+#     try:
+#         consumed_calories = float(f["consumed_calories"])
+#         nutrition_data[0] = consumed_calories
+#     except:
+#         consumed_calories = "Consumed Calories"
+#         
+#     try:
+#         calories_goal = float(f["calories_goal"])
+#         goal_nutrition_data[0] = calories_goal
+#     except:
+#         calories_goal = "Calorie Goal"
     
-        
+    try:
+        dinner_calories_goal = float(f["dinner_calories_goal"])
+    except:
+        dinner_calories_goal = "Dinner Calorie Goal"
         
     create_dinners_flag = True
-    if (type(consumed_calories) == str) and (type(calories_goal) == str):
+#     if (type(consumed_calories) == str) and (type(calories_goal) == str):
+#         create_dinners_flag = False
+#         error_text = "Consumed calories and calorie goal required."
+#         return render_template('index.html', create_dinners_flag=create_dinners_flag,
+#             consumed_calories=consumed_calories, calories_goal=calories_goal, error_text=error_text)
+#     if (type(consumed_calories) == str):
+#         create_dinners_flag = False
+#         error_text = "Consumed calories required."
+#         return render_template('index.html', create_dinners_flag=create_dinners_flag,
+#             consumed_calories=consumed_calories, calories_goal=calories_goal, error_text=error_text)
+#     if (type(calories_goal) == str):
+#         if calories_goal == "Calorie Goal":
+#             calories_goal = 2500
+#         else:
+#             create_dinners_flag = False
+#             error_text = "Calorie goal required."
+#             return render_template('index.html', create_dinners_flag=create_dinners_flag,
+#                 consumed_calories=consumed_calories, calories_goal=calories_goal, error_text=error_text)
+# 
+#     if (consumed_calories) < 0 or (calories_goal < 0):
+#         create_dinners_flag = False
+#         error_text = "Consumed calories and/or calorie goal must be 0 or larger."
+#         return render_template('index.html', create_dinners_flag=create_dinners_flag,
+#             consumed_calories=consumed_calories, calories_goal=calories_goal, error_text=error_text)
+# 
+#     if calories_goal < consumed_calories:
+#         create_dinners_flag = False
+#         error_text = "Whoa, whoa whoa! You've already eaten enough today."
+#         return render_template('index.html', create_dinners_flag=create_dinners_flag,
+#             consumed_calories=consumed_calories, calories_goal=calories_goal, error_text=error_text)
+    
+    if (type(dinner_calories_goal) == str):
         create_dinners_flag = False
-        error_text = "Consumed calories and calorie goal required."
+        error_text = ""
+        print dinner_calories_goal
         return render_template('index.html', create_dinners_flag=create_dinners_flag,
-            consumed_calories=consumed_calories, calories_goal=calories_goal, error_text=error_text)
-    if (type(consumed_calories) == str):
-        create_dinners_flag = False
-        error_text = "Consumed calories required."
-        return render_template('index.html', create_dinners_flag=create_dinners_flag,
-            consumed_calories=consumed_calories, calories_goal=calories_goal, error_text=error_text)
-    if (type(calories_goal) == str):
-        if calories_goal == "Calorie Goal":
-            calories_goal = 2500
-        else:
-            create_dinners_flag = False
-            error_text = "Calorie goal required."
-            return render_template('index.html', create_dinners_flag=create_dinners_flag,
-                consumed_calories=consumed_calories, calories_goal=calories_goal, error_text=error_text)
-
-    if (consumed_calories) < 0 or (calories_goal < 0):
-        create_dinners_flag = False
-        error_text = "Consumed calories and/or calorie goal must be 0 or larger."
-        return render_template('index.html', create_dinners_flag=create_dinners_flag,
-            consumed_calories=consumed_calories, calories_goal=calories_goal, error_text=error_text)
-
-    if calories_goal < consumed_calories:
-        create_dinners_flag = False
-        error_text = "Whoa, whoa whoa! You've already eaten enough today."
-        return render_template('index.html', create_dinners_flag=create_dinners_flag,
-            consumed_calories=consumed_calories, calories_goal=calories_goal, error_text=error_text)
-
+            dinner_calories_goal=dinner_calories_goal, error_text=error_text)
+    
+    
+    
+    """
     # auto-fill carbohydrate
     nutrition_data[1] = consumed_calories*0.1225
     # auto-fill fat
@@ -89,27 +102,41 @@ def index():
     goal_nutrition_data[4] = calories_goal*0.037
     # auto-fill fiber
     goal_nutrition_data[5] = calories_goal*0.019
-    
-    
+    """        
     random_dinner_flag = False
     data = []
     
-    previous_consumed_nutrition = array(nutrition_data)
-    daily_nutrition_goal = array(goal_nutrition_data)
-    dinner_nutrition_target = daily_nutrition_goal - previous_consumed_nutrition
+#     previous_consumed_nutrition = array(nutrition_data)
+#     daily_nutrition_goal = array(goal_nutrition_data)
+#     dinner_nutrition_target = daily_nutrition_goal - previous_consumed_nutrition
+    
+    dinner_nutrition_target = array([0,0,0,0,0,0])
+    dinner_nutrition_target[0] = dinner_calories_goal
+    # auto-fill carbohydrate
+    dinner_nutrition_target[1] = dinner_calories_goal*0.1225
+    # auto-fill fat
+    dinner_nutrition_target[2] = dinner_calories_goal*0.0325
+    # auto-fill protein
+    dinner_nutrition_target[3] = dinner_calories_goal*0.049
+    # auto-fill sugar
+    dinner_nutrition_target[4] = dinner_calories_goal*0.037
+    # auto-fill fiber
+    dinner_nutrition_target[5] = dinner_calories_goal*0.019
+    
     try:
         cuisine_choice = f["cuisine_choice"]
     except:
         cuisine_choice = "r"
     
-    score, dinner_desc_list, dinner_portion_list, dinner_nutrition = generated_dinner_match(dinner_nutrition_target, daily_nutrition_goal, cuisine_choice)
+#     score, dinner_desc_list, dinner_portion_list, dinner_nutrition = generated_dinner_match(dinner_nutrition_target, daily_nutrition_goal, cuisine_choice)
+    dinner_desc_list, dinner_portion_list, dinner_nutrition = generated_dinner_match(dinner_nutrition_target, cuisine_choice)
 
 
     dinner_nutrition_data = []
     for val in dinner_nutrition:
         dinner_nutrition_data.append(str(round(val)))
     
-    score_str = "%.2f" % (score)
+#     score_str = "%.2f" % (score)
     
     data = []
     for n in range(len(dinner_desc_list)):
@@ -146,10 +173,12 @@ def index():
     dinner_nutrition_target = ["%.1f"%b for b in dinner_nutrition_target]
         
     return render_template('index.html', create_dinners_flag=create_dinners_flag,
-        consumed_calories=consumed_calories, calories_goal=calories_goal, 
+#         consumed_calories=consumed_calories, 
+#         calories_goal=calories_goal,
+        dinner_calories_goal=int(dinner_calories_goal),
         cuisine_choice=cuisine_choice,
         dinner_nutrition_target=dinner_nutrition_target,
-        score=score_str, 
+#         score=score_str, 
         data=data, 
         dinner_nutrition_data=dinner_nutrition_data, 
         dinner_colors=dinner_colors,

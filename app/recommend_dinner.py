@@ -186,7 +186,8 @@ def historical_dinner_match(dinner_nutrition_target, daily_nutrition_goal):
 
 
 
-def generated_dinner_match(dinner_nutrition_target, daily_nutrition_goal, cuisine_code):
+# def generated_dinner_match(dinner_nutrition_target, daily_nutrition_goal, cuisine_code):
+def generated_dinner_match(dinner_nutrition_target, cuisine_code):
 
     conn = pymysql.connect(host=host, port=port, user=user, passwd=passwd, db=db)
     cur = conn.cursor()
@@ -240,13 +241,13 @@ def generated_dinner_match(dinner_nutrition_target, daily_nutrition_goal, cuisin
     cur.close()
     conn.close()
 
-    dinner_scores = []
+#     dinner_scores = []
     simple_dinner_scores = []
     for chosen_food_match in returned_data:
         dinner_nutrition = array(chosen_food_match[:6])
-        dinner_goal_offset = dinner_nutrition_target - dinner_nutrition
-        dinner_score = sum( (abs(dinner_goal_offset/daily_nutrition_goal))**0.5 )
-        dinner_scores.append(dinner_score)
+#         dinner_goal_offset = dinner_nutrition_target - dinner_nutrition
+#         dinner_score = sum( (abs(dinner_goal_offset/daily_nutrition_goal))**0.5 )
+#         dinner_scores.append(dinner_score)
         dinner_accuracy = (array(dinner_nutrition, dtype=float) / array(dinner_nutrition_target, dtype=float))
         dinner_simple_score = 0.0
         for n in range(len(dinner_accuracy)):
@@ -260,7 +261,7 @@ def generated_dinner_match(dinner_nutrition_target, daily_nutrition_goal, cuisin
             dinner_simple_score=5
         simple_dinner_scores.append(dinner_simple_score)
     
-    dinner_scores = array(dinner_scores)
+#     dinner_scores = array(dinner_scores)
     simple_dinner_scores = array(simple_dinner_scores)
     if len(simple_dinner_scores) == 0:
         return -1, [], [], [-1, -1, -1, -1, -1, -1]
@@ -295,7 +296,8 @@ def generated_dinner_match(dinner_nutrition_target, daily_nutrition_goal, cuisin
         best_dinner_portion_list = simplified_best_dinner_portion_list
         
         
-    best_dinner_score = dinner_scores[best_dinner_index]
+#     best_dinner_score = dinner_scores[best_dinner_index]
     best_dinner_simple_score = simple_dinner_scores[best_dinner_index]
     
-    return best_dinner_score, best_dinner_desc_list, best_dinner_portion_list, best_dinner_nutrition
+#     return best_dinner_score, best_dinner_desc_list, best_dinner_portion_list, best_dinner_nutrition
+    return best_dinner_desc_list, best_dinner_portion_list, best_dinner_nutrition

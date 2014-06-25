@@ -120,7 +120,9 @@ def top_eight_foods(cuisine_code, nutrient, hist_bound_min, hist_bound):
         "baked or broiled w/o fat", "smoked", "steamed or boiled", 
         "breaded or battered", "steamed", "fried w/ animal fat or meat drippings", 
         "baked or broiled  w/o fat", "baked or broiled w/ animal fat or meat drippings", 
-        "fried w/ butter", "and/or poultry", "made from home recipe"]
+        "fried w/ butter", "and/or poultry", "made from home recipe",
+        "with fish w/o fat or w/ nonstick spray", "with vegetables", "german style", 
+        "made with milk", "reduced sodium", "rolled in seaweed"]
 
     cleaned_common_phrases = []
     common_phrases = counter.most_common(len(unique_phrases))
