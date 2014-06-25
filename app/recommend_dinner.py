@@ -240,7 +240,10 @@ def generated_dinner_match(dinner_nutrition_target, cuisine_code):
 
     cur.close()
     conn.close()
-
+    
+    if len(returned_data) < 1:
+        return ["no dinners"], ["no dinners"], ["no dinners"]
+    
 #     dinner_scores = []
     simple_dinner_scores = []
     for chosen_food_match in returned_data:

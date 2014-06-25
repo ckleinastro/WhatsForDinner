@@ -77,8 +77,18 @@ def index():
         return render_template('index.html', create_dinners_flag=create_dinners_flag,
             dinner_calories_goal=dinner_calories_goal, error_text=error_text)
     
-    
-    
+    if dinner_calories_goal < 100:
+        create_dinners_flag = False
+        error_text = "Please try with a higher value (>99 calories)."
+        return render_template('index.html', create_dinners_flag=create_dinners_flag,
+            dinner_calories_goal=dinner_calories_goal, error_text=error_text)
+
+    if dinner_calories_goal > 15000:
+        create_dinners_flag = False
+        error_text = "Please try with a lower value (<15,000 calories)."
+        return render_template('index.html', create_dinners_flag=create_dinners_flag,
+            dinner_calories_goal=dinner_calories_goal, error_text=error_text)
+
     """
     # auto-fill carbohydrate
     nutrition_data[1] = consumed_calories*0.1225
@@ -102,7 +112,6 @@ def index():
     # auto-fill fiber
     goal_nutrition_data[5] = calories_goal*0.019
     """        
-    random_dinner_flag = False
     data = []
     
 #     previous_consumed_nutrition = array(nutrition_data)
@@ -129,6 +138,8 @@ def index():
     
 #     score, dinner_desc_list, dinner_portion_list, dinner_nutrition = generated_dinner_match(dinner_nutrition_target, daily_nutrition_goal, cuisine_choice)
     dinner_desc_list, dinner_portion_list, dinner_nutrition = generated_dinner_match(dinner_nutrition_target, cuisine_choice)
+    
+    
 
 
     dinner_nutrition_data = []
