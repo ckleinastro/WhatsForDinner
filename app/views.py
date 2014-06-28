@@ -38,7 +38,10 @@ def index():
         dinner_calories_goal = float(f["dinner_calories_goal"])
     except:
         dinner_calories_goal = "Dinner Calorie Goal"
-        
+    
+    dinner_calories_goal = 570
+    
+     
     create_dinners_flag = True
 #     if (type(consumed_calories) == str) and (type(calories_goal) == str):
 #         create_dinners_flag = False
@@ -135,7 +138,7 @@ def index():
         cuisine_choice = f["cuisine_choice"]
     except:
         cuisine_choice = "r"
-    
+    cuisine_choice = "as"
 #     score, dinner_desc_list, dinner_portion_list, dinner_nutrition = generated_dinner_match(dinner_nutrition_target, daily_nutrition_goal, cuisine_choice)
     dinner_desc_list, dinner_portion_list, dinner_nutrition = generated_dinner_match(dinner_nutrition_target, cuisine_choice)
     
